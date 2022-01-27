@@ -8,3 +8,17 @@ softdepend: []
 
 author: TotomInc <cazade.thomas@gmail.com>
 website: https://totominc.io/
+
+commands:
+  esreload:
+    description: Reload ExtraSkills plugin.
+    usage: /esreload
+    permission: extraskills.reload
+
+permissions:
+  extraskills.reload:
+    description: Allow the user to reload the ExtraSkills plugin.
+    default: op
+  extraskills.*:
+    description: Give all permissions of the ExtraSkills plugin.
+    default: op
