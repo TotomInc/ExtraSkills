@@ -1,12 +1,14 @@
 package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
+  private static BukkitAudiences adventure;
 
   /**
    * Called when plugin is enabling.
@@ -14,6 +16,7 @@ public class ExtraSkills extends JavaPlugin {
   @Override
   public void onEnable() {
     instance = this;
+    adventure = BukkitAudiences.create(this);
 
     registerCommands();
   }
@@ -24,6 +27,7 @@ public class ExtraSkills extends JavaPlugin {
   @Override
   public void onDisable() {
     instance = null;
+    adventure = null;
   }
 
   /**
@@ -33,6 +37,19 @@ public class ExtraSkills extends JavaPlugin {
    */
   public static ExtraSkills getInstance() {
     return instance;
+  }
+
+  /**
+   * Returns the instance of Adventure.
+   *
+   * @return BukkitAudiences instance.
+   */
+  public static BukkitAudiences getAdventure() {
+    if (adventure == null) {
+      throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+    }
+
+    return adventure;
   }
 
   /**
