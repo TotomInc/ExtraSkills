@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
+import io.totominc.ExtraSkills.listeners.PlayerListeners;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public class ExtraSkills extends JavaPlugin {
     instance = this;
     adventure = BukkitAudiences.create(this);
 
+    registerEvents();
     registerCommands();
   }
 
@@ -50,6 +52,13 @@ public class ExtraSkills extends JavaPlugin {
     }
 
     return adventure;
+  }
+
+  /**
+   * Register various events listeners.
+   */
+  private void registerEvents() {
+    this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
   }
 
   /**
