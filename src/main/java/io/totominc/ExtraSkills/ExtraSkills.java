@@ -2,6 +2,7 @@ package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
 import io.totominc.ExtraSkills.listeners.PlayerListeners;
+import io.totominc.ExtraSkills.skills.Skills;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,8 @@ public class ExtraSkills extends JavaPlugin {
 
     registerEvents();
     registerCommands();
+
+    Skills.update();
   }
 
   /**
