@@ -47,6 +47,10 @@ public class MiningSkill extends Skill {
    */
   @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   private void handleBlockBreakEvent(@NotNull BlockBreakEvent event) {
+    if (this.getSkillConfig().getConfig().getStringList("skill-disabled-in-worlds").contains(event.getBlock().getWorld().getName())) {
+      return;
+    }
+
     Player player = event.getPlayer();
 
     if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
