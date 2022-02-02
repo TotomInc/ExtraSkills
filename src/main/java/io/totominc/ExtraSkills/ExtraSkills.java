@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
+import io.totominc.ExtraSkills.listeners.PlayerBlockListener;
 import io.totominc.ExtraSkills.listeners.PlayerListeners;
 import io.totominc.ExtraSkills.skills.Skills;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -62,6 +63,7 @@ public class ExtraSkills extends JavaPlugin {
    */
   private void registerEvents() {
     this.getServer().getPluginManager().registerEvents(new PlayerListeners(), this);
+    this.getServer().getPluginManager().registerEvents(new PlayerBlockListener(), this);
   }
 
   /**

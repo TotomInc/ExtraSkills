@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.skills;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.utils.BlockUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,9 +33,11 @@ public class MiningSkill extends Skill {
   private void handleBlockBreakEvent(@NotNull BlockBreakEvent event) {
     Player player = event.getPlayer();
 
-    ExtraSkills.getInstance().getLogger().info(player.getDisplayName());
-
     if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
+      return;
+    }
+
+    if (BlockUtils.isPlayerPlaced(event.getBlock())) {
       return;
     }
 
