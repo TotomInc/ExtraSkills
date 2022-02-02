@@ -1,7 +1,6 @@
 package io.totominc.ExtraSkills.skills;
 
 import com.google.common.collect.ImmutableSet;
-import io.totominc.ExtraSkills.ExtraSkills;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,8 +50,6 @@ public class Skills {
    * files have been edited and reloaded.
    */
   public static void update() {
-    ExtraSkills.getInstance().getLogger().info("Hello, World!");
-
     for (Skill skill : Skills.values()) {
       skill.update();
     }

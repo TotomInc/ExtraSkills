@@ -1,0 +1,11 @@
+skill-name: "Mining"
+skill-description: "Mine blocks to earn mining experience!"
+skill-max-level: 1000
+skill-disabled-in-worlds: []
+
+# Set the XP rewards for each type of block that is mined.
+# Should be formatted with a space between block-name and experience amount:
+# block_name exp_amount
+xp-rewards-per-blocks:
+  - "netherrack 0.25"
+  - "stone 0.5"
