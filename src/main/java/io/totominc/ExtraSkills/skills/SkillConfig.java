@@ -20,6 +20,15 @@ public class SkillConfig {
   }
 
   /**
+   * Get the skill YamlConfiguration.
+   *
+   * @return YamlConfiguration for this skill.
+   */
+  public YamlConfiguration getConfig() {
+    return this.config;
+  }
+
+  /**
    * Based on the current skill name, try to load the config file associated to
    * this skill. If it doesn't exist, make sure to create a fresh copy of this
    * skill config from resources folder.
@@ -40,15 +49,6 @@ public class SkillConfig {
     } catch (IOException | InvalidConfigurationException e) {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * Get the skill YamlConfiguration.
-   *
-   * @return YamlConfiguration for this skill.
-   */
-  public YamlConfiguration getConfig() {
-    return this.config;
   }
 
   /**

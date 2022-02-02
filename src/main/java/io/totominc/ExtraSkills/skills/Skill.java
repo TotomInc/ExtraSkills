@@ -8,7 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.EnumMap;
 
 public abstract class Skill implements Listener {
-  private final ExtraSkills instance = ExtraSkills.getInstance();
+  public final ExtraSkills instance = ExtraSkills.getInstance();
+
   private final String id;
   private final EnumMap<Material, Double> rewards = new EnumMap<>(Material.class);
   private final SkillConfig skillConfig;
@@ -76,7 +77,7 @@ public abstract class Skill implements Listener {
    *
    * @return SkillConfig instance for this skill.
    */
-  public SkillConfig getConfig() {
+  public SkillConfig getSkillConfig() {
     return this.skillConfig;
   }
 }

@@ -1,6 +1,5 @@
 package io.totominc.ExtraSkills.skills;
 
-import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.utils.BlockUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -16,12 +15,29 @@ public class MiningSkill extends Skill {
   public MiningSkill() {
     super("MINING");
 
-    EnumMap<Material, Double> rewards = getRewards();
-    rewards.put(Material.STONE, 0.5);
+    this.loadRewards();
   }
 
   public void afterUpdate() {
     // Nothing to do...
+  }
+
+  /**
+   * Load rewards from the configuration file and add them into the rewards
+   * EnumMap.
+   */
+  private void loadRewards() {
+    EnumMap<Material, Double> rewards = getRewards();
+
+    for (String item : this.getSkillConfig().getConfig().getStringList("xp-rewards-per-blocks")) {
+      String[] splitted = item.split("\\s+");
+      Material material = Material.getMaterial(splitted[0].toUpperCase());
+      double xpReward = Double.parseDouble(splitted[1]);
+
+      if (material != null && xpReward > 0) {
+        rewards.put(material, xpReward);
+      }
+    }
   }
 
   /**
@@ -43,6 +59,6 @@ public class MiningSkill extends Skill {
 
     double blockReward = this.getReward(event.getBlock().getType());
 
-    ExtraSkills.getInstance().getLogger().info(String.valueOf(blockReward));
+    this.instance.getLogger().info(String.valueOf(blockReward));
   }
 }
