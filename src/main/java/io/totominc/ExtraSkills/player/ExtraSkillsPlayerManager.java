@@ -32,7 +32,7 @@ public final class ExtraSkillsPlayerManager {
     UUID playerUuid = player.getUniqueId();
 
     if (!players.containsKey(playerUuid)) {
-      players.put(playerUuid, new ExtraSkillsPlayer());
+      players.put(playerUuid, new ExtraSkillsPlayer(playerUuid));
     }
   }
 
@@ -42,7 +42,12 @@ public final class ExtraSkillsPlayerManager {
    * @param player Bukkit Player instance.
    */
   public static void removePlayer(@NotNull Player player) {
-    players.remove(player.getUniqueId());
+    UUID playerUuid = player.getUniqueId();
+
+    if (players.containsKey(playerUuid)) {
+      players.get(playerUuid).save();
+      players.remove(player.getUniqueId());
+    }
   }
 
   /**
