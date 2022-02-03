@@ -79,7 +79,7 @@ public final class JsonDataHandler {
    * @return JSONObject.
    * @throws IOException Thrown if it cannot read/write to file/folders.
    */
-  public static JSONObject loadPlayerState(@NotNull UUID playerUuid) throws IOException {
+  public static JSONObject loadPlayerSave(@NotNull UUID playerUuid) throws IOException {
     File playerSaveFile = getPlayerSaveFile(playerUuid);
 
     if (!playerSaveFile.exists()) {
@@ -93,6 +93,20 @@ public final class JsonDataHandler {
     }
 
     return new JSONObject(fileContent);
+  }
+
+  public static PlayerData loadPlayerState(@NotNull UUID playerUuid) throws IOException {
+    JSONObject playerSave = loadPlayerSave(playerUuid);
+
+    if (playerSave != null) {
+      if (playerSave.has("skills")) {
+        JSONObject skills = playerSave.getJSONObject("skills");
+      }
+
+      return new PlayerData();
+    }
+
+    return null;
   }
 
   /**
