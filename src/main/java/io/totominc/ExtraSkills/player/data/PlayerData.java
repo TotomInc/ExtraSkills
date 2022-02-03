@@ -16,8 +16,8 @@ public class PlayerData {
     this.playerUuid = playerUuid;
 
     for (PlayerSkill playerSkill : playerSkillMap.values()) {
-      playerSkillMap.put(playerSkill.id, playerSkill);
-      playerSkillDataMap.put(playerSkill.id, new PlayerSkillData(playerSkill.id, playerSkill.level, playerSkill.experience));
+      this.playerSkillMap.put(playerSkill.id, playerSkill);
+      this.playerSkillDataMap.put(playerSkill.id, new PlayerSkillData(playerSkill.id, playerSkill.level, playerSkill.experience));
     }
   }
 
