@@ -1,7 +1,5 @@
 package io.totominc.ExtraSkills.player;
 
-import org.json.JSONObject;
-
 public class PlayerSkill {
   public String id;
   public int level = 1;
@@ -51,14 +49,20 @@ public class PlayerSkill {
   }
 
   /**
-   * Convert the state of this PlayerSkill instance into a JSON string.
+   * Set the current level.
+   *
+   * @param level Level to set.
    */
-  public JSONObject toJson() {
-    JSONObject root = new JSONObject();
+  public void setLevel(int level) {
+    this.level = level;
+  }
 
-    root.put("level", this.level);
-    root.put("experience", this.experience);
-
-    return root;
+  /**
+   * Set the current amount of experience.
+   *
+   * @param experience Experience amount.
+   */
+  public void setExperience(double experience) {
+    this.experience = experience;
   }
 }

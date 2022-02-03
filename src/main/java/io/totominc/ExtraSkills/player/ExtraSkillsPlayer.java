@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.player.data.JsonDataHandler;
+import io.totominc.ExtraSkills.player.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
 import io.totominc.ExtraSkills.skills.Skills;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +23,8 @@ public class ExtraSkillsPlayer {
 
       playerSkillMap.put(skillId, new PlayerSkill(skillId));
     }
+
+    this.load();
   }
 
   /**
@@ -44,6 +47,23 @@ public class ExtraSkillsPlayer {
   public void save() {
     try {
       JsonDataHandler.savePlayerState(this.playerSkillMap, this.playerUuid);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Load the player state from the save file if the user has one.
+   */
+  public void load() {
+    try {
+      PlayerData playerData = JsonDataHandler.loadPlayerState(this.playerUuid);
+
+      if (playerData != null) {
+        for (PlayerSkill playerSkill : playerData.playerSkillMap.values()) {
+          playerSkillMap.replace(playerSkill.id, playerSkill);
+        }
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
