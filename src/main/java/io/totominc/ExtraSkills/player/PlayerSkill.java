@@ -3,7 +3,7 @@ package io.totominc.ExtraSkills.player;
 import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.config.SkillProgressionTypes;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.jetbrains.annotations.NotNull;
 
@@ -89,14 +89,18 @@ public class PlayerSkill {
   /**
    * Send an action-bar to the player with the message format defined in the
    * config.yml: skill-progression.action-bar.format
+   * <p>
+   * Only send the action-bar if it has been enabled in the config.yml.
    *
    * @param playerUuid Bukkit Player UUID.
    */
   public void sendActionBar(@NotNull UUID playerUuid) {
-    String message = ExtraSkills.getPluginConfig().getSkillProgressionConfig().get(SkillProgressionTypes.ACTION_BAR).format();
-    TextComponent component = Component.text(this.interpolateSkillMessage(message));
+    if (ExtraSkills.getPluginConfig().getSkillProgressionConfig().get(SkillProgressionTypes.ACTION_BAR).isEnabled()) {
+      String message = ExtraSkills.getPluginConfig().getSkillProgressionConfig().get(SkillProgressionTypes.ACTION_BAR).format();
+      Component component = MiniMessage.get().deserialize(this.interpolateSkillMessage(message));
 
-    ExtraSkills.getAdventure().player(playerUuid).sendActionBar(component);
+      ExtraSkills.getAdventure().player(playerUuid).sendActionBar(component);
+    }
   }
 
   /**
@@ -116,7 +120,8 @@ public class PlayerSkill {
     Map<String, String> values = new HashMap<>();
     StrSubstitutor substitutor = new StrSubstitutor(values, "{", "}");
 
-    values.put("skill_name", this.id);
+    // Make sure the skill name is properly formatted with first letter uppercase.
+    values.put("skill_name", this.id.substring(0, 1).toUpperCase() + this.id.substring(1).toLowerCase());
     values.put("current_exp", String.format("%.2f", this.experience));
     values.put("exp_required", String.format("%.2f", this.getExperienceRequired()));
     values.put("exp_percentage", String.format("%.2f", this.getExperiencePercentage()));

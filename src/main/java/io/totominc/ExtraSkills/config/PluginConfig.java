@@ -49,7 +49,7 @@ public final class PluginConfig {
         if (progression != null) {
           this.skillProgressionConfig.put(
             type,
-            new SkillProgressionConfig(progression.getBoolean("is-enabled"), progression.getString("format"))
+            new SkillProgressionConfig(progression.getBoolean("enabled"), progression.getString("format"))
           );
         }
       }
