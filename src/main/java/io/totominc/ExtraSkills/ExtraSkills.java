@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
+import io.totominc.ExtraSkills.config.PluginConfig;
 import io.totominc.ExtraSkills.listeners.PlayerBlockListener;
 import io.totominc.ExtraSkills.listeners.PlayerListeners;
 import io.totominc.ExtraSkills.player.ExtraSkillsPlayerManager;
@@ -13,17 +14,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
+  private static PluginConfig pluginConfig;
 
   /**
    * Called when plugin is enabling.
    */
   @Override
   public void onEnable() {
+    this.saveDefaultConfig();
+
     instance = this;
     adventure = BukkitAudiences.create(this);
+    pluginConfig = new PluginConfig();
 
-    registerEvents();
-    registerCommands();
+    this.registerEvents();
+    this.registerCommands();
 
     ExtraSkillsPlayerManager.addPlayers(this.getServer().getOnlinePlayers());
 
@@ -61,6 +66,15 @@ public class ExtraSkills extends JavaPlugin {
     }
 
     return adventure;
+  }
+
+  /**
+   * Returns the instance of the PluginConfig.
+   *
+   * @return PluginConfig instance.
+   */
+  public static PluginConfig getPluginConfig() {
+    return pluginConfig;
   }
 
   /**

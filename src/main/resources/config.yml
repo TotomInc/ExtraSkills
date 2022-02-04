@@ -1,0 +1,13 @@
+# ExtraSkills by TotomInc
+# Question, need support? Feel free to join the official Discord server.
+# https://discord.gg/wxWmRCQ2M8
+
+# Determine how to show visual feedback about a skill progression to the player.
+# You have multiple ways to give visual feedback such as:
+#   - Action-bar: a small text above the player hot-bar
+#   - Boss-bar: a progression bar with a custom text
+#   - Sound: a sound to play on a skill levelup.
+skill-progression:
+  action-bar:
+    enabled: true
+    format: "<white>%skill_name% skill - %current_exp%/%exp_required% (%exp_percentage%%)"
