@@ -9,7 +9,7 @@ import java.util.Map;
 
 public final class PluginConfig {
   private static final ExtraSkills instance = ExtraSkills.getInstance();
-  private static final Map<SkillProgressionTypes, SkillProgressionConfig> skillProgressionConfig = new HashMap<>();
+  private final Map<SkillProgressionTypes, SkillProgressionConfig> skillProgressionConfig = new HashMap<>();
 
   public PluginConfig() {
     this.loadSkillProgression();
@@ -30,8 +30,8 @@ public final class PluginConfig {
    *
    * @return Map containing all SkillProgressionConfig.
    */
-  public static Map<SkillProgressionTypes, SkillProgressionConfig> getSkillProgressionConfig() {
-    return skillProgressionConfig;
+  public Map<SkillProgressionTypes, SkillProgressionConfig> getSkillProgressionConfig() {
+    return this.skillProgressionConfig;
   }
 
   /**
@@ -43,10 +43,11 @@ public final class PluginConfig {
 
     if (skillProgression != null) {
       for (SkillProgressionTypes type : SkillProgressionTypes.values()) {
-        ConfigurationSection progression = skillProgression.getConfigurationSection(type.name());
+        String typeName = type.name().toLowerCase().replace("_", "-");
+        ConfigurationSection progression = skillProgression.getConfigurationSection(typeName);
 
         if (progression != null) {
-          skillProgressionConfig.put(
+          this.skillProgressionConfig.put(
             type,
             new SkillProgressionConfig(progression.getBoolean("is-enabled"), progression.getString("format"))
           );

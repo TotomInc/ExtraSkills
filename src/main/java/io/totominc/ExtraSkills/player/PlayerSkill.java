@@ -1,5 +1,16 @@
 package io.totominc.ExtraSkills.player;
 
+import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.config.SkillProgressionTypes;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class PlayerSkill {
   public String id;
   public int level = 1;
@@ -49,6 +60,15 @@ public class PlayerSkill {
   }
 
   /**
+   * Return the percentage progression for the next levelup.
+   *
+   * @return Percentage to next levelup.
+   */
+  public double getExperiencePercentage() {
+    return this.experience / getExperienceRequired() * 100;
+  }
+
+  /**
    * Set the current level.
    *
    * @param level Level to set.
@@ -64,5 +84,43 @@ public class PlayerSkill {
    */
   public void setExperience(double experience) {
     this.experience = experience;
+  }
+
+  /**
+   * Send an action-bar to the player with the message format defined in the
+   * config.yml: skill-progression.action-bar.format
+   *
+   * @param playerUuid Bukkit Player UUID.
+   */
+  public void sendActionBar(@NotNull UUID playerUuid) {
+    String message = ExtraSkills.getPluginConfig().getSkillProgressionConfig().get(SkillProgressionTypes.ACTION_BAR).format();
+    TextComponent component = Component.text(this.interpolateSkillMessage(message));
+
+    ExtraSkills.getAdventure().player(playerUuid).sendActionBar(component);
+  }
+
+  /**
+   * Replace the placeholder content of a message with real values. Possible
+   * values are:
+   * <ul>
+   *   <li>skill_name: name of the skill.</li>
+   *   <li>current_exp: current amount of experience.</li>
+   *   <li>exp_required: amount of experience required to levelup.</li>
+   *   <li>exp_percentage: percentage progression to the next levelup.</li>
+   * </ul>
+   *
+   * @param message Message to interpolate values to.
+   * @return An interpolated message.
+   */
+  private String interpolateSkillMessage(String message) {
+    Map<String, String> values = new HashMap<>();
+    StrSubstitutor substitutor = new StrSubstitutor(values, "{", "}");
+
+    values.put("skill_name", this.id);
+    values.put("current_exp", String.format("%.2f", this.experience));
+    values.put("exp_required", String.format("%.2f", this.getExperienceRequired()));
+    values.put("exp_percentage", String.format("%.2f", this.getExperiencePercentage()));
+
+    return substitutor.replace(message);
   }
 }

@@ -38,6 +38,7 @@ public class ExtraSkillsPlayer {
 
     if (playerSkill != null) {
       playerSkill.gainExperience(amount);
+      playerSkill.sendActionBar(this.playerUuid);
     }
   }
 
