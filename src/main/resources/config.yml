@@ -10,4 +10,4 @@
 skill-progression:
   action-bar:
     enabled: true
-    format: "<white>{skill_name} skill - {current_exp}/{exp_required} ({exp_percentage}%)"
+    format: "<#ff7675>{skill_name} <#dfe6e9><bold>»</bold> <#fab1a0>{current_exp}/{exp_required} <bold><#fab1a0>{exp_percentage}%</bold>"
