@@ -73,6 +73,16 @@ public abstract class Skill implements Listener {
   }
 
   /**
+   * Verify if a specific material is included in the rewards HashMap.
+   *
+   * @param material Material to find in the rewards.
+   * @return True if the material has been found in the rewards HashMap.
+   */
+  public boolean hasReward(Material material) {
+    return this.rewards.get(material) != null;
+  }
+
+  /**
    * Get the SkillConfig instance of this skill.
    *
    * @return SkillConfig instance for this skill.

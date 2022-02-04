@@ -62,7 +62,13 @@ public class MiningSkill extends Skill {
       return;
     }
 
-    double experienceReward = this.getReward(event.getBlock().getType());
+    Material blockMaterial = event.getBlock().getType();
+
+    if (!this.hasReward(blockMaterial)) {
+      return;
+    }
+
+    double experienceReward = this.getReward(blockMaterial);
 
     ExtraSkillsPlayerManager.gainSkillExperience(player, this, experienceReward);
   }

@@ -13,7 +13,7 @@ xp-rewards-per-blocks:
   - "andesite 0.5"
   - "granite 0.5"
   - "cobblestone 0.25"
-  - "tuff: 0.5"
+  - "tuff 0.5"
   - "calcite 0.5"
   - "blackstone 0.5"
   - "deepslate 0.5"
