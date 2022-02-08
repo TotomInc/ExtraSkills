@@ -8,6 +8,7 @@ import io.totominc.ExtraSkills.player.ExtraSkillsPlayerManager;
 import io.totominc.ExtraSkills.skills.Skills;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
@@ -25,13 +26,17 @@ public class ExtraSkills extends JavaPlugin {
 
     instance = this;
     adventure = BukkitAudiences.create(this);
-    pluginConfig = new PluginConfig();
+
+    try {
+      pluginConfig = new PluginConfig();
+    } catch (InvalidConfigurationException e) {
+      e.printStackTrace();
+    }
 
     this.registerEvents();
     this.registerCommands();
 
     ExtraSkillsPlayerManager.addPlayers(this.getServer().getOnlinePlayers());
-
     Skills.update();
   }
 
@@ -42,6 +47,7 @@ public class ExtraSkills extends JavaPlugin {
   public void onDisable() {
     instance = null;
     adventure = null;
+    pluginConfig = null;
 
     ExtraSkillsPlayerManager.clearPlayers();
   }

@@ -2,26 +2,17 @@ package io.totominc.ExtraSkills.config;
 
 import io.totominc.ExtraSkills.ExtraSkills;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class PluginConfig {
-  private static final ExtraSkills instance = ExtraSkills.getInstance();
   private final Map<SkillProgressionTypes, SkillProgressionConfig> skillProgressionConfig = new HashMap<>();
 
-  public PluginConfig() {
+  public PluginConfig() throws InvalidConfigurationException {
     this.loadSkillProgression();
-  }
-
-  /**
-   * Get the "config.yml" FileConfiguration of the plugin.
-   *
-   * @return FileConfiguration "config.yml".
-   */
-  public FileConfiguration getConfig() {
-    return instance.getConfig();
   }
 
   /**
@@ -31,28 +22,32 @@ public final class PluginConfig {
    * @return Map containing all SkillProgressionConfig.
    */
   public Map<SkillProgressionTypes, SkillProgressionConfig> getSkillProgressionConfig() {
-    return this.skillProgressionConfig;
+    return skillProgressionConfig;
   }
 
   /**
    * Load all possibles types of SkillProgressionConfig into the map.
    */
-  private void loadSkillProgression() {
-    FileConfiguration config = getConfig();
-    ConfigurationSection skillProgression = config.getConfigurationSection("skill-progression");
+  private void loadSkillProgression() throws InvalidConfigurationException {
+    FileConfiguration config = ExtraSkills.getInstance().getConfig();
+    ConfigurationSection progressionSection = config.getConfigurationSection("skill-progression");
 
-    if (skillProgression != null) {
-      for (SkillProgressionTypes type : SkillProgressionTypes.values()) {
-        String typeName = type.name().toLowerCase().replace("_", "-");
-        ConfigurationSection progression = skillProgression.getConfigurationSection(typeName);
+    if (progressionSection == null) {
+      throw new InvalidConfigurationException("Invalid \"skill-progression\" configuration");
+    }
 
-        if (progression != null) {
-          this.skillProgressionConfig.put(
-            type,
-            new SkillProgressionConfig(progression.getBoolean("enabled"), progression.getString("format"))
-          );
-        }
+    for (SkillProgressionTypes type : SkillProgressionTypes.values()) {
+      String typeName = type.name().toLowerCase().replace("_", "-");
+      ConfigurationSection progression = progressionSection.getConfigurationSection(typeName);
+
+      if (progression == null) {
+        throw new InvalidConfigurationException("Invalid \"skill-progression\" configuration");
       }
+
+      skillProgressionConfig.put(
+        type,
+        new SkillProgressionConfig(progression.getBoolean("enabled"), progression.getString("format"))
+      );
     }
   }
 }
