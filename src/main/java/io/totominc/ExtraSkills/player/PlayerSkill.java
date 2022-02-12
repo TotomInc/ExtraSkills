@@ -1,27 +1,29 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.config.skillprogression.SkillProgressionConfig;
 import io.totominc.ExtraSkills.config.skillprogression.SoundConfig;
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public final class PlayerSkill {
   private final ExtraSkillsPlayer extraSkillsPlayer;
+  private final SkillProgressionConfig skillProgressionConfig;
   private final String id;
   private int level = 1;
   private double experience = 0;
 
   public PlayerSkill(ExtraSkillsPlayer extraSkillsPlayer, String id) {
     this.extraSkillsPlayer = extraSkillsPlayer;
+    this.skillProgressionConfig = ExtraSkills.getPluginConfig().getSkillProgressionConfig();
     this.id = id;
   }
 
@@ -128,17 +130,23 @@ public final class PlayerSkill {
   /**
    * Send an action-bar to the player with the message format defined in the
    * config.yml: skill-progression.action-bar.format
-   * <p>
-   * Only send the action-bar if it has been enabled in the config.yml.
-   *
-   * @param playerUuid Bukkit Player UUID.
    */
-  public void sendActionBar(@NotNull UUID playerUuid) {
-    if (ExtraSkills.getPluginConfig().getSkillProgressionConfig().getActionBarConfig().isEnabled()) {
-      String message = ExtraSkills.getPluginConfig().getSkillProgressionConfig().getActionBarConfig().format();
+  public void sendActionBar() {
+    if (skillProgressionConfig.getActionBarConfig().isEnabled()) {
+      String message = skillProgressionConfig.getActionBarConfig().format();
       Component component = MiniMessage.get().deserialize(this.interpolateSkillMessage(message));
 
-      ExtraSkills.getAdventure().player(playerUuid).sendActionBar(component);
+      ExtraSkills.getAdventure().player(this.extraSkillsPlayer.getPlayerUuid()).sendActionBar(component);
+    }
+  }
+
+  /**
+   * Send a boss-bar to the player with the message format defined in the
+   * config.yml: skill-progression.boss-bar.format
+   */
+  public void sendBossBar() {
+    if (skillProgressionConfig.getBossBarConfig().isEnabled()) {
+      ExtraSkills.getAdventure().player(this.extraSkillsPlayer.getPlayerUuid()).showBossBar(this.generateBossBar());
     }
   }
 
@@ -179,5 +187,19 @@ public final class PlayerSkill {
     if (player != null) {
       player.playSound(player, Sound.valueOf(soundConfig.name()), soundConfig.volume(), soundConfig.pitch());
     }
+  }
+
+  /**
+   * Generate a boss-bar for the current PlayerSkill.
+   *
+   * @return BossBar instance.
+   */
+  private BossBar generateBossBar() {
+    return BossBar.bossBar(
+      MiniMessage.get().deserialize(this.interpolateSkillMessage(this.skillProgressionConfig.getBossBarConfig().format())),
+      (float) this.getExperiencePercentage() / 100,
+      this.skillProgressionConfig.getBossBarConfig().color(),
+      this.skillProgressionConfig.getBossBarConfig().segments()
+    );
   }
 }

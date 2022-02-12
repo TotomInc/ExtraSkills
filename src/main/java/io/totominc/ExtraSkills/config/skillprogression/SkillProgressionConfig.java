@@ -1,8 +1,7 @@
 package io.totominc.ExtraSkills.config.skillprogression;
 
 import io.totominc.ExtraSkills.ExtraSkills;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
+import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -79,8 +78,8 @@ public final class SkillProgressionConfig {
 
     this.bossBarConfig = new BossBarConfig(
       bossBar.getBoolean("enabled"),
-      BarStyle.valueOf(bossBar.getString("segments")),
-      BarColor.valueOf(bossBar.getString("color")),
+      BossBar.Overlay.valueOf(bossBar.getString("segments")),
+      BossBar.Color.valueOf(bossBar.getString("color")),
       bossBar.getString("format")
     );
   }

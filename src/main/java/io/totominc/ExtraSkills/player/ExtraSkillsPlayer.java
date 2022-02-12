@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ExtraSkillsPlayer {
+public final class ExtraSkillsPlayer {
   private final Map<String, PlayerSkill> playerSkillMap = new HashMap<>();
   private final UUID playerUuid;
 
@@ -48,7 +48,8 @@ public class ExtraSkillsPlayer {
 
     if (playerSkill != null) {
       playerSkill.gainExperience(amount);
-      playerSkill.sendActionBar(this.playerUuid);
+      playerSkill.sendActionBar();
+      playerSkill.sendBossBar();
     }
   }
 

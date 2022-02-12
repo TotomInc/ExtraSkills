@@ -1,6 +1,5 @@
 package io.totominc.ExtraSkills.config.skillprogression;
 
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
+import net.kyori.adventure.bossbar.BossBar;
 
-public record BossBarConfig(boolean isEnabled, BarStyle segments, BarColor color, String format) {}
+public record BossBarConfig(boolean isEnabled, BossBar.Overlay segments, BossBar.Color color, String format) {}
