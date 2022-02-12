@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.player.data;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.player.ExtraSkillsPlayer;
 import io.totominc.ExtraSkills.player.PlayerSkill;
 import io.totominc.ExtraSkills.skills.Skill;
 import io.totominc.ExtraSkills.skills.Skills;
@@ -111,11 +112,12 @@ public final class JsonDataHandler {
    * Load player save file and create a PlayerData instance with updated skills
    * from save file.
    *
+   * @param extraSkillsPlayer Instance of the ExtraSkillsPlayer.
    * @param playerUuid Bukkit UUID of a Player instance.
    * @return PlayerData instance.
    * @throws IOException Thrown if it cannot read/write to file/folders.
    */
-  public static PlayerData loadPlayerState(@NotNull UUID playerUuid) throws IOException {
+  public static PlayerData loadPlayerState(@NotNull ExtraSkillsPlayer extraSkillsPlayer, @NotNull UUID playerUuid) throws IOException {
     JSONObject playerSave = loadPlayerSave(playerUuid);
 
     if (playerSave != null) {
@@ -124,14 +126,14 @@ public final class JsonDataHandler {
 
       for (Skill skill : Skills.values()) {
         JSONObject savedSkill = playerSave.getJSONObject("skills").getJSONObject(skill.getID());
-        PlayerSkill playerSkill = new PlayerSkill(skill.getID());
+        PlayerSkill playerSkill = new PlayerSkill(extraSkillsPlayer, skill.getID());
 
         if (savedSkill != null) {
           playerSkill.setLevel(savedSkill.getInt("level"));
           playerSkill.setExperience(savedSkill.getDouble("experience"));
         }
 
-        savedSkills.put(playerSkill.id, playerSkill);
+        savedSkills.put(playerSkill.getId(), playerSkill);
       }
 
       return new PlayerData(savedUuid, savedSkills);

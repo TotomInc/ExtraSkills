@@ -21,10 +21,20 @@ public class ExtraSkillsPlayer {
     for (Skill skill : Skills.values()) {
       String skillId = skill.getID();
 
-      playerSkillMap.put(skillId, new PlayerSkill(skillId));
+      this.playerSkillMap.put(skillId, new PlayerSkill(this, skillId));
     }
 
     this.load();
+  }
+
+  /**
+   * Get the UUID of the Bukkit Player instance used for this ExtraSkillsPlayer
+   * instance.
+   *
+   * @return Bukkit Player instance UUID.
+   */
+  public UUID getPlayerUuid() {
+    return this.playerUuid;
   }
 
   /**
@@ -58,11 +68,11 @@ public class ExtraSkillsPlayer {
    */
   public void load() {
     try {
-      PlayerData playerData = JsonDataHandler.loadPlayerState(this.playerUuid);
+      PlayerData playerData = JsonDataHandler.loadPlayerState(this, this.playerUuid);
 
       if (playerData != null) {
         for (PlayerSkill playerSkill : playerData.playerSkillMap.values()) {
-          playerSkillMap.replace(playerSkill.id, playerSkill);
+          this.playerSkillMap.replace(playerSkill.getId(), playerSkill);
         }
       }
     } catch (IOException e) {

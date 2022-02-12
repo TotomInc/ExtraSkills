@@ -1,7 +1,6 @@
 package io.totominc.ExtraSkills.config.skillprogression;
 
 import io.totominc.ExtraSkills.ExtraSkills;
-import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.ConfigurationSection;
@@ -21,18 +20,38 @@ public final class SkillProgressionConfig {
     }
   }
 
+  /**
+   * Get the ActionBar configuration.
+   *
+   * @return ActionBar configuration.
+   */
   public ActionBarConfig getActionBarConfig() {
     return this.actionBarConfig;
   }
 
+  /**
+   * Get the Sound configuration.
+   *
+   * @return Sound configuration.
+   */
   public SoundConfig getSoundConfig() {
     return this.soundConfig;
   }
 
+  /**
+   * Get the BossBar configuration.
+   *
+   * @return BossBar configuration.
+   */
   public BossBarConfig getBossBarConfig() {
     return this.bossBarConfig;
   }
 
+  /**
+   * Initialize skill-progression configuration from reading config.yml.
+   *
+   * @throws InvalidConfigurationException Thrown when configuration is invalid.
+   */
   private void loadSkillProgression() throws InvalidConfigurationException {
     FileConfiguration config = ExtraSkills.getInstance().getConfig();
     ConfigurationSection progressionSection = config.getConfigurationSection("skill-progression");
@@ -45,21 +64,24 @@ public final class SkillProgressionConfig {
     ConfigurationSection sound = progressionSection.getConfigurationSection("sound");
     ConfigurationSection bossBar = progressionSection.getConfigurationSection("boss-bar");
 
-    if (actionbar != null) {
-      this.actionBarConfig = new ActionBarConfig(actionbar.getBoolean("enabled"), actionbar.getString("format"));
+    if (actionbar == null || sound == null || bossBar == null) {
+      throw new InvalidConfigurationException("Invalid \"skill-progression\" configuration");
     }
 
-    if (sound != null) {
-      Sound name = Sound.valueOf(sound.getString("name"));
+    this.actionBarConfig = new ActionBarConfig(actionbar.getBoolean("enabled"), actionbar.getString("format"));
 
-      this.soundConfig = new SoundConfig(sound.getBoolean("enabled"), name, sound.getDouble("pitch"));
-    }
+    this.soundConfig = new SoundConfig(
+      sound.getBoolean("enabled"),
+      sound.getString("name"),
+      (float) sound.getDouble("volume"),
+      (float) sound.getDouble("pitch")
+    );
 
-    if (bossBar != null) {
-      BarStyle segments = BarStyle.valueOf(bossBar.getString("segments"));
-      BarColor color = BarColor.valueOf(bossBar.getString("color"));
-
-      this.bossBarConfig = new BossBarConfig(bossBar.getBoolean("enabled"), segments, color, bossBar.getString("format"));
-    }
+    this.bossBarConfig = new BossBarConfig(
+      bossBar.getBoolean("enabled"),
+      BarStyle.valueOf(bossBar.getString("segments")),
+      BarColor.valueOf(bossBar.getString("color")),
+      bossBar.getString("format")
+    );
   }
 }

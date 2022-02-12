@@ -1,22 +1,37 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.config.skillprogression.SoundConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerSkill {
-  public String id;
-  public int level = 1;
-  public double experience = 0;
+public final class PlayerSkill {
+  private final ExtraSkillsPlayer extraSkillsPlayer;
+  private final String id;
+  private int level = 1;
+  private double experience = 0;
 
-  public PlayerSkill(String id) {
+  public PlayerSkill(ExtraSkillsPlayer extraSkillsPlayer, String id) {
+    this.extraSkillsPlayer = extraSkillsPlayer;
     this.id = id;
+  }
+
+  /**
+   * Identifier / name of this skill.
+   *
+   * @return Name of the skill used as an identifier.
+   */
+  public String getId() {
+    return this.id;
   }
 
   /**
@@ -33,10 +48,26 @@ public class PlayerSkill {
    * Try to levelup as much as possible.
    */
   public void levelup() {
+    boolean hasLevelupOnce = false;
+
     while (this.experience >= this.getExperienceRequired()) {
+      hasLevelupOnce = true;
       this.experience -= this.getExperienceRequired();
       this.level += 1;
     }
+
+    if (hasLevelupOnce) {
+      this.sendLevelupSound();
+    }
+  }
+
+  /**
+   * Amount of experience for this skill.
+   *
+   * @return Experience amount.
+   */
+  public double getExperience() {
+    return this.experience;
   }
 
   /**
@@ -65,6 +96,15 @@ public class PlayerSkill {
    */
   public double getExperiencePercentage() {
     return this.experience / this.getExperienceRequired() * 100;
+  }
+
+  /**
+   * Current level for this skill.
+   *
+   * @return Skill level.
+   */
+  public int getLevel() {
+    return this.level;
   }
 
   /**
@@ -126,5 +166,18 @@ public class PlayerSkill {
     values.put("exp_percentage", String.format("%.2f", this.getExperiencePercentage()));
 
     return substitutor.replace(message);
+  }
+
+  /**
+   * Send a sound specified on the skill-configuration section of the config.yml
+   * when a player levelup its skill.
+   */
+  private void sendLevelupSound() {
+    Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
+    SoundConfig soundConfig = ExtraSkills.getPluginConfig().getSkillProgressionConfig().getSoundConfig();
+
+    if (player != null) {
+      player.playSound(player, Sound.valueOf(soundConfig.name()), soundConfig.volume(), soundConfig.pitch());
+    }
   }
 }

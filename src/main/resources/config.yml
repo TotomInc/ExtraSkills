@@ -17,8 +17,10 @@ skill-progression:
   sound:
     enabled: true
     # Name of the sound, see this for a list of possible values:
-    # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+    # https://www.andre601.ch/Spigot-Sounds/
     name: "ENTITY_PLAYER_LEVELUP"
+    # Value between 0 and 1, alter the sound volume.
+    volume: 0.75
     # Value between 0.5 and 2, will alter the pitch of the sound.
     pitch: 1
   boss-bar:
