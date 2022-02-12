@@ -1,7 +1,6 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.config.SkillProgressionTypes;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang.text.StrSubstitutor;
@@ -46,7 +45,7 @@ public class PlayerSkill {
    * @return Amount of experience required to levelup.
    */
   public double getExperienceRequired() {
-    return getExperienceRequired(this.level);
+    return this.getExperienceRequired(this.level);
   }
 
   /**
@@ -65,7 +64,7 @@ public class PlayerSkill {
    * @return Percentage to next levelup.
    */
   public double getExperiencePercentage() {
-    return this.experience / getExperienceRequired() * 100;
+    return this.experience / this.getExperienceRequired() * 100;
   }
 
   /**
@@ -95,8 +94,8 @@ public class PlayerSkill {
    * @param playerUuid Bukkit Player UUID.
    */
   public void sendActionBar(@NotNull UUID playerUuid) {
-    if (ExtraSkills.getPluginConfig().getSkillProgressionConfig().get(SkillProgressionTypes.ACTION_BAR).isEnabled()) {
-      String message = ExtraSkills.getPluginConfig().getSkillProgressionConfig().get(SkillProgressionTypes.ACTION_BAR).format();
+    if (ExtraSkills.getPluginConfig().getSkillProgressionConfig().getActionBarConfig().isEnabled()) {
+      String message = ExtraSkills.getPluginConfig().getSkillProgressionConfig().getActionBarConfig().format();
       Component component = MiniMessage.get().deserialize(this.interpolateSkillMessage(message));
 
       ExtraSkills.getAdventure().player(playerUuid).sendActionBar(component);
