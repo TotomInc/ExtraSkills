@@ -1,5 +1,6 @@
 package io.totominc.ExtraSkills.skills;
 
+import io.totominc.ExtraSkills.player.ExtraSkillsPlayer;
 import io.totominc.ExtraSkills.player.ExtraSkillsPlayerManager;
 import io.totominc.ExtraSkills.utils.BlockUtils;
 import org.bukkit.GameMode;
@@ -69,7 +70,10 @@ public class MiningSkill extends Skill {
     }
 
     double experienceReward = this.getReward(blockMaterial);
+    ExtraSkillsPlayer extraSkillsPlayer = ExtraSkillsPlayerManager.getPlayer(player);
 
-    ExtraSkillsPlayerManager.gainSkillExperience(player, this, experienceReward);
+    if (extraSkillsPlayer != null) {
+      extraSkillsPlayer.gainSkillExperience(this, experienceReward);
+    }
   }
 }

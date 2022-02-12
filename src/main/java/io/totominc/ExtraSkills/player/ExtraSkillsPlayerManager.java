@@ -1,6 +1,5 @@
 package io.totominc.ExtraSkills.player;
 
-import io.totominc.ExtraSkills.skills.Skill;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,6 +36,26 @@ public final class ExtraSkillsPlayerManager {
   }
 
   /**
+   * Get an ExtraSkillsPlayer based on its Bukkit Player entity.
+   *
+   * @param player Bukkit Player entity.
+   * @return ExtraSkillsPlayer instance.
+   */
+  public static ExtraSkillsPlayer getPlayer(@NotNull Player player) {
+    return getPlayer(player.getUniqueId());
+  }
+
+  /**
+   * Get an ExtraSkillsPlayer based on its Bukkit Player entity UUID.
+   *
+   * @param playerUuid Bukkit Player entity UUID.
+   * @return ExtraSkillsPlayer instance.
+   */
+  public static ExtraSkillsPlayer getPlayer(@NotNull UUID playerUuid) {
+    return players.get(playerUuid);
+  }
+
+  /**
    * Remove a player from the players HashMap using its UUID as a key.
    *
    * @param player Bukkit Player instance.
@@ -55,20 +74,5 @@ public final class ExtraSkillsPlayerManager {
    */
   public static void clearPlayers() {
     players.clear();
-  }
-
-  /**
-   * Add experience of a specific skill to a player.
-   *
-   * @param player Player instance.
-   * @param skill Skill.
-   * @param amount Amount of experience to gain.
-   */
-  public static void gainSkillExperience(@NotNull Player player, @NotNull Skill skill, @NotNull Double amount) {
-    UUID playerUuid = player.getUniqueId();
-
-    if (players.containsKey(playerUuid)) {
-      players.get(playerUuid).gainSkillExperience(skill, amount);
-    }
   }
 }
