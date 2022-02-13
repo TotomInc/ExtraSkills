@@ -27,6 +27,7 @@ skill-progression:
 # give visual feedback such as:
 #   - Sound: a sound that will be played on the player
 #   - Chat: a special message that will only appear to the player
+#   - Broadcast: a message sent to all online players of the server
 skill-level-up:
   sound:
     enabled: true
@@ -39,4 +40,4 @@ skill-level-up:
     pitch: 1
   chat:
     enabled: true
-    format: ""
+    format: "<#ff7675>Congratulations, you are now <#dfe6e9><bold>level {level}</bold><#ff7675> in <#fab1a0>{skill_name}<#ff7675>!"

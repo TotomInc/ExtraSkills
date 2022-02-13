@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public final class SkillLevelupConfig {
   private SoundConfig soundConfig;
+  private ChatConfig chatConfig;
 
   public SkillLevelupConfig() {
     try {
@@ -26,6 +27,15 @@ public final class SkillLevelupConfig {
   }
 
   /**
+   * Get the Chat configuration.
+   *
+   * @return Chat configuration.
+   */
+  public ChatConfig getChatConfig() {
+    return this.chatConfig;
+  }
+
+  /**
    * Initialize skill-level-up configuration from reading config.yml.
    *
    * @throws InvalidConfigurationException Thrown when configuration is invalid.
@@ -39,16 +49,19 @@ public final class SkillLevelupConfig {
     }
 
     ConfigurationSection sound = progressionSection.getConfigurationSection("sound");
+    ConfigurationSection chat = progressionSection.getConfigurationSection("chat");
 
-    if (sound == null) {
+    if (sound == null || chat == null) {
       throw new InvalidConfigurationException("Invalid \"skill-level-up\" configuration");
     }
 
     this.soundConfig = new SoundConfig(
-        sound.getBoolean("enabled"),
-        sound.getString("name"),
-        (float) sound.getDouble("volume"),
-        (float) sound.getDouble("pitch")
+      sound.getBoolean("enabled"),
+      sound.getString("name"),
+      (float) sound.getDouble("volume"),
+      (float) sound.getDouble("pitch")
     );
+
+    this.chatConfig = new ChatConfig(chat.getBoolean("enabled"), chat.getString("format"));
   }
 }

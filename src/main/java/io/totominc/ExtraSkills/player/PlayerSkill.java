@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.config.skilllevelup.ChatConfig;
 import io.totominc.ExtraSkills.config.skilllevelup.SoundConfig;
 import io.totominc.ExtraSkills.config.skillprogression.SkillProgressionConfig;
 import net.kyori.adventure.audience.Audience;
@@ -64,6 +65,7 @@ public final class PlayerSkill {
 
     if (hasLevelupOnce) {
       this.sendLevelupSound();
+      this.sendLevelUpChat();
     }
   }
 
@@ -187,6 +189,7 @@ public final class PlayerSkill {
    *   <li>current_exp: current amount of experience.</li>
    *   <li>exp_required: amount of experience required to levelup.</li>
    *   <li>exp_percentage: percentage progression to the next levelup.</li>
+   *   <li>level: current skill level.</li>
    * </ul>
    *
    * @param message Message to interpolate values to.
@@ -196,11 +199,12 @@ public final class PlayerSkill {
     Map<String, String> values = new HashMap<>();
     StrSubstitutor substitutor = new StrSubstitutor(values, "{", "}");
 
-    // Make sure the skill name is properly formatted with first letter uppercase.
+    // Make sure the skill name is properly formatted with a first letter in uppercase.
     values.put("skill_name", this.id.substring(0, 1).toUpperCase() + this.id.substring(1).toLowerCase());
     values.put("current_exp", String.format("%.2f", this.experience));
     values.put("exp_required", String.format("%.2f", this.getExperienceRequired()));
     values.put("exp_percentage", String.format("%.2f", this.getExperiencePercentage()));
+    values.put("level", String.valueOf(this.getLevel()));
 
     return substitutor.replace(message);
   }
@@ -215,6 +219,18 @@ public final class PlayerSkill {
 
     if (player != null) {
       player.playSound(player, Sound.valueOf(soundConfig.name()), soundConfig.volume(), soundConfig.pitch());
+    }
+  }
+
+  /**
+   * Send a chat message only to the specified player when he level-up its skill.
+   */
+  private void sendLevelUpChat() {
+    Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
+    ChatConfig chatConfig = ExtraSkills.getPluginConfig().getSkillLevelupConfig().getChatConfig();
+
+    if (player != null) {
+      ExtraSkills.getAdventure().player(player).sendMessage(MiniMessage.get().deserialize(this.interpolateSkillMessage(chatConfig.format())));
     }
   }
 
