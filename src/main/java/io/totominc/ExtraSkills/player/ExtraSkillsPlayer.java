@@ -4,6 +4,7 @@ import io.totominc.ExtraSkills.player.data.JsonDataHandler;
 import io.totominc.ExtraSkills.player.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
 import io.totominc.ExtraSkills.skills.Skills;
+import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public final class ExtraSkillsPlayer {
   private final Map<String, PlayerSkill> playerSkillMap = new HashMap<>();
   private final UUID playerUuid;
+  private BossBar bossBar;
 
   public ExtraSkillsPlayer(UUID playerUuid) {
     this.playerUuid = playerUuid;
@@ -35,6 +37,22 @@ public final class ExtraSkillsPlayer {
    */
   public UUID getPlayerUuid() {
     return this.playerUuid;
+  }
+
+  /**
+   * Retrieve the boss-bar of this player instance.
+   *
+   * @return Adventure BossBar.
+   */
+  public BossBar getBossBar() {
+    return this.bossBar;
+  }
+
+  /**
+   * Set the boss-bar of this player instance.
+   */
+  public void setBossBar(BossBar bossBar) {
+    this.bossBar = bossBar;
   }
 
   /**

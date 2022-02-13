@@ -3,6 +3,7 @@ package io.totominc.ExtraSkills.player;
 import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.config.skillprogression.SkillProgressionConfig;
 import io.totominc.ExtraSkills.config.skillprogression.SoundConfig;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -146,7 +147,13 @@ public final class PlayerSkill {
    */
   public void sendBossBar() {
     if (skillProgressionConfig.getBossBarConfig().isEnabled()) {
-      ExtraSkills.getAdventure().player(this.extraSkillsPlayer.getPlayerUuid()).showBossBar(this.generateBossBar());
+      Audience playerAudience = ExtraSkills.getAdventure().player(this.extraSkillsPlayer.getPlayerUuid());
+
+      playerAudience.hideBossBar(this.extraSkillsPlayer.getBossBar());
+
+      this.extraSkillsPlayer.setBossBar(this.generateBossBar());
+
+      playerAudience.showBossBar(this.extraSkillsPlayer.getBossBar());
     }
   }
 

@@ -25,10 +25,13 @@ skill-progression:
     pitch: 1
   boss-bar:
     enabled: true
-    # Segments to display on the boss-bar, for a list of possible values see:
-    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
-    segments: "SEGMENTED_20"
-    # Color to use for the boss-bar, for a list of possible values see:
-    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
+    # Segments to display on the boss-bar, possible values are:
+    # NOTCHED_20, NOTCHED_12, NOTCHED_10, NOTCHED_6, PROGRESS
+    segments: "NOTCHED_20"
+    # Color to use for the boss-bar, possible values are:
+    # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
     color: "PURPLE"
     format: "<#ff7675>{skill_name} <#dfe6e9><bold>»</bold> <#fab1a0>{current_exp}/{exp_required}"
+    # A value in seconds that will be used to remove the boss-bar from the
+    # player interface.
+    remove-after: 3

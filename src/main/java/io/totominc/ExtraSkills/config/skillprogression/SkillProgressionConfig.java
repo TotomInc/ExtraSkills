@@ -80,7 +80,8 @@ public final class SkillProgressionConfig {
       bossBar.getBoolean("enabled"),
       BossBar.Overlay.valueOf(bossBar.getString("segments")),
       BossBar.Color.valueOf(bossBar.getString("color")),
-      bossBar.getString("format")
+      bossBar.getString("format"),
+      bossBar.getLong("remove-after")
     );
   }
 }
