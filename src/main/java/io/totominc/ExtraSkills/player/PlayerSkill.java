@@ -11,6 +11,8 @@ import org.apache.commons.lang.text.StrSubstitutor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,7 @@ public final class PlayerSkill {
   private final String id;
   private int level = 1;
   private double experience = 0;
+  private BukkitTask previousTask;
 
   public PlayerSkill(ExtraSkillsPlayer extraSkillsPlayer, String id) {
     this.extraSkillsPlayer = extraSkillsPlayer;
@@ -147,13 +150,32 @@ public final class PlayerSkill {
    */
   public void sendBossBar() {
     if (skillProgressionConfig.getBossBarConfig().isEnabled()) {
+      // ExtraSkillsPlayer reference used inside Bukkit Runnable Task.
+      ExtraSkillsPlayer extraSkillsPlayer = this.extraSkillsPlayer;
       Audience playerAudience = ExtraSkills.getAdventure().player(this.extraSkillsPlayer.getPlayerUuid());
+
+      if (this.previousTask != null && !this.previousTask.isCancelled()) {
+        this.previousTask.cancel();
+        this.previousTask = null;
+      }
 
       playerAudience.hideBossBar(this.extraSkillsPlayer.getBossBar());
 
       this.extraSkillsPlayer.setBossBar(this.generateBossBar());
 
       playerAudience.showBossBar(this.extraSkillsPlayer.getBossBar());
+
+      // Runnable Task that will automatically hide the boss-bar after X seconds
+      // as defined in the configuration file.
+      this.previousTask = new BukkitRunnable() {
+        @Override
+        public void run() {
+          playerAudience.hideBossBar(extraSkillsPlayer.getBossBar());
+        }
+      }.runTaskLater(
+        ExtraSkills.getInstance(),
+        ExtraSkills.getPluginConfig().getSkillProgressionConfig().getBossBarConfig().removeAfterSeconds() * 20
+      );
     }
   }
 
