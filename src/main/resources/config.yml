@@ -2,6 +2,9 @@
 # Question, need support? Feel free to join the official Discord server.
 # https://discord.gg/wxWmRCQ2M8
 
+# All messages are supporting MiniMessage format, please see their official documentation:
+# https://docs.adventure.kyori.net/minimessage#format
+
 # Determine how to show visual feedback about a skill progression to the player.
 # You have multiple ways to give visual feedback such as:
 #   - Action-bar: a small text above the player hot-bar
@@ -41,3 +44,8 @@ skill-level-up:
   chat:
     enabled: true
     format: "<#ff7675>Congratulations, you are now <#dfe6e9><bold>level {level}</bold><#ff7675> in <#fab1a0>{skill_name}<#ff7675>!"
+  broadcast:
+    enabled: true
+    # When reaching one of those specific levels, send a broadcast message.
+    levels: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950, 975, 990, 1000]
+    format: "<#dfe6e9>{player_name} <#ff7675>has reached <#dfe6e9><bold>level {level}</bold> <#ff7675>in <#fab1a0>{skill_name}<#ff7675>!"

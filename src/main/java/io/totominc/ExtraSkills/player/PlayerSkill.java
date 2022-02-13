@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.config.skilllevelup.BroadcastConfig;
 import io.totominc.ExtraSkills.config.skilllevelup.ChatConfig;
 import io.totominc.ExtraSkills.config.skilllevelup.SoundConfig;
 import io.totominc.ExtraSkills.config.skillprogression.SkillProgressionConfig;
@@ -64,8 +65,9 @@ public final class PlayerSkill {
     }
 
     if (hasLevelupOnce) {
-      this.sendLevelupSound();
+      this.sendLevelUpSound();
       this.sendLevelUpChat();
+      this.sendLevelUpBroadcast();
     }
   }
 
@@ -190,6 +192,7 @@ public final class PlayerSkill {
    *   <li>exp_required: amount of experience required to levelup.</li>
    *   <li>exp_percentage: percentage progression to the next levelup.</li>
    *   <li>level: current skill level.</li>
+   *   <li>player_name: name of the player associated to this PlayerSkill instance.</li>
    * </ul>
    *
    * @param message Message to interpolate values to.
@@ -198,6 +201,7 @@ public final class PlayerSkill {
   private String interpolateSkillMessage(String message) {
     Map<String, String> values = new HashMap<>();
     StrSubstitutor substitutor = new StrSubstitutor(values, "{", "}");
+    Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
 
     // Make sure the skill name is properly formatted with a first letter in uppercase.
     values.put("skill_name", this.id.substring(0, 1).toUpperCase() + this.id.substring(1).toLowerCase());
@@ -206,6 +210,10 @@ public final class PlayerSkill {
     values.put("exp_percentage", String.format("%.2f", this.getExperiencePercentage()));
     values.put("level", String.valueOf(this.getLevel()));
 
+    if (player != null) {
+      values.put("player_name", player.getDisplayName());
+    }
+
     return substitutor.replace(message);
   }
 
@@ -213,7 +221,7 @@ public final class PlayerSkill {
    * Send a sound specified on the skill-configuration section of the config.yml
    * when a player levelup its skill.
    */
-  private void sendLevelupSound() {
+  private void sendLevelUpSound() {
     Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
     SoundConfig soundConfig = ExtraSkills.getPluginConfig().getSkillLevelupConfig().getSoundConfig();
 
@@ -231,6 +239,28 @@ public final class PlayerSkill {
 
     if (player != null) {
       ExtraSkills.getAdventure().player(player).sendMessage(MiniMessage.get().deserialize(this.interpolateSkillMessage(chatConfig.format())));
+    }
+  }
+
+  /**
+   * Send a chat message to all online players of the server when the player
+   * level-up its skill.
+   */
+  private void sendLevelUpBroadcast() {
+    BroadcastConfig broadcastConfig = ExtraSkills.getPluginConfig().getSkillLevelupConfig().getBroadcastConfig();
+    boolean hasLevel = false;
+
+    for (Integer lvl : broadcastConfig.levels()) {
+      if (level == lvl) {
+        hasLevel = true;
+        break;
+      }
+    }
+
+    Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
+
+    if (player != null && hasLevel) {
+      ExtraSkills.getAdventure().all().sendMessage(MiniMessage.get().deserialize(this.interpolateSkillMessage(broadcastConfig.format())));
     }
   }
 
