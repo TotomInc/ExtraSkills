@@ -8,12 +8,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public final class SkillProgressionConfig {
   private ActionBarConfig actionBarConfig;
-  private SoundConfig soundConfig;
   private BossBarConfig bossBarConfig;
 
   public SkillProgressionConfig() {
     try {
-      this.loadSkillProgression();
+      this.load();
     } catch (InvalidConfigurationException e) {
       e.printStackTrace();
     }
@@ -26,15 +25,6 @@ public final class SkillProgressionConfig {
    */
   public ActionBarConfig getActionBarConfig() {
     return this.actionBarConfig;
-  }
-
-  /**
-   * Get the Sound configuration.
-   *
-   * @return Sound configuration.
-   */
-  public SoundConfig getSoundConfig() {
-    return this.soundConfig;
   }
 
   /**
@@ -51,7 +41,7 @@ public final class SkillProgressionConfig {
    *
    * @throws InvalidConfigurationException Thrown when configuration is invalid.
    */
-  private void loadSkillProgression() throws InvalidConfigurationException {
+  private void load() throws InvalidConfigurationException {
     FileConfiguration config = ExtraSkills.getInstance().getConfig();
     ConfigurationSection progressionSection = config.getConfigurationSection("skill-progression");
 
@@ -60,21 +50,13 @@ public final class SkillProgressionConfig {
     }
 
     ConfigurationSection actionbar = progressionSection.getConfigurationSection("action-bar");
-    ConfigurationSection sound = progressionSection.getConfigurationSection("sound");
     ConfigurationSection bossBar = progressionSection.getConfigurationSection("boss-bar");
 
-    if (actionbar == null || sound == null || bossBar == null) {
+    if (actionbar == null || bossBar == null) {
       throw new InvalidConfigurationException("Invalid \"skill-progression\" configuration");
     }
 
     this.actionBarConfig = new ActionBarConfig(actionbar.getBoolean("enabled"), actionbar.getString("format"));
-
-    this.soundConfig = new SoundConfig(
-      sound.getBoolean("enabled"),
-      sound.getString("name"),
-      (float) sound.getDouble("volume"),
-      (float) sound.getDouble("pitch")
-    );
 
     this.bossBarConfig = new BossBarConfig(
       bossBar.getBoolean("enabled"),

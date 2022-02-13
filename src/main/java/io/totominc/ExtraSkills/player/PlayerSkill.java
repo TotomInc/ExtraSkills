@@ -1,8 +1,8 @@
 package io.totominc.ExtraSkills.player;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.config.skilllevelup.SoundConfig;
 import io.totominc.ExtraSkills.config.skillprogression.SkillProgressionConfig;
-import io.totominc.ExtraSkills.config.skillprogression.SoundConfig;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -211,7 +211,7 @@ public final class PlayerSkill {
    */
   private void sendLevelupSound() {
     Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
-    SoundConfig soundConfig = ExtraSkills.getPluginConfig().getSkillProgressionConfig().getSoundConfig();
+    SoundConfig soundConfig = ExtraSkills.getPluginConfig().getSkillLevelupConfig().getSoundConfig();
 
     if (player != null) {
       player.playSound(player, Sound.valueOf(soundConfig.name()), soundConfig.volume(), soundConfig.pitch());
