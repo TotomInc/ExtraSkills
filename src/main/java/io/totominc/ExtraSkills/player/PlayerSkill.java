@@ -142,7 +142,7 @@ public final class PlayerSkill {
   public void sendActionBar() {
     if (skillProgressionConfig.getActionBarConfig().isEnabled()) {
       String message = skillProgressionConfig.getActionBarConfig().format();
-      Component component = MiniMessage.get().deserialize(this.interpolateSkillMessage(message));
+      Component component = MiniMessage.miniMessage().deserialize(this.interpolateSkillMessage(message));
 
       ExtraSkills.getAdventure().player(this.extraSkillsPlayer.getPlayerUuid()).sendActionBar(component);
     }
@@ -238,7 +238,7 @@ public final class PlayerSkill {
     ChatConfig chatConfig = ExtraSkills.getPluginConfig().getSkillLevelupConfig().getChatConfig();
 
     if (player != null) {
-      ExtraSkills.getAdventure().player(player).sendMessage(MiniMessage.get().deserialize(this.interpolateSkillMessage(chatConfig.format())));
+      ExtraSkills.getAdventure().player(player).sendMessage(MiniMessage.miniMessage().deserialize(this.interpolateSkillMessage(chatConfig.format())));
     }
   }
 
@@ -260,7 +260,7 @@ public final class PlayerSkill {
     Player player = Bukkit.getPlayer(this.extraSkillsPlayer.getPlayerUuid());
 
     if (player != null && hasLevel) {
-      ExtraSkills.getAdventure().all().sendMessage(MiniMessage.get().deserialize(this.interpolateSkillMessage(broadcastConfig.format())));
+      ExtraSkills.getAdventure().all().sendMessage(MiniMessage.miniMessage().deserialize(this.interpolateSkillMessage(broadcastConfig.format())));
     }
   }
 
@@ -271,7 +271,7 @@ public final class PlayerSkill {
    */
   private BossBar generateBossBar() {
     return BossBar.bossBar(
-      MiniMessage.get().deserialize(this.interpolateSkillMessage(this.skillProgressionConfig.getBossBarConfig().format())),
+      MiniMessage.miniMessage().deserialize(this.interpolateSkillMessage(this.skillProgressionConfig.getBossBarConfig().format())),
       (float) this.getExperiencePercentage() / 100,
       this.skillProgressionConfig.getBossBarConfig().color(),
       this.skillProgressionConfig.getBossBarConfig().segments()

@@ -46,8 +46,12 @@ public class ExtraSkills extends JavaPlugin {
   @Override
   public void onDisable() {
     instance = null;
-    adventure = null;
     pluginConfig = null;
+
+    if (adventure != null) {
+      adventure.close();
+      adventure = null;
+    }
 
     ExtraSkillsPlayerManager.clearPlayers();
   }

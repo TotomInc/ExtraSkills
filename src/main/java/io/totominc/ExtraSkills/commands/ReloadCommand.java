@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class ReloadCommand implements CommandExecutor {
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-    Component message = MiniMessage.get().parse("<gold>The plugin configuration has been reloaded.");
+    Component message = MiniMessage.miniMessage().deserialize("<gold>The plugin configuration has been reloaded.");
 
     ExtraSkills.getInstance().reloadConfig();
     ExtraSkills.getAdventure().sender(sender).sendMessage(message);
