@@ -1,9 +1,9 @@
 name: ExtraSkills
 main: io.totominc.ExtraSkills.ExtraSkills
-description: Add skills and level-up passives to make your survival server grindier like an RPG.
+description: Level-up skills such as mining or fishing to gain vanilla-friendly passives.
 
 version: 0.0.1
-api-version: 1.18
+api-version: 1.19
 softdepend: []
 
 author: TotomInc <cazade.thomas@gmail.com>
