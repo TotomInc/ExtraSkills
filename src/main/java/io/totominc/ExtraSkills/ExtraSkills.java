@@ -1,15 +1,19 @@
 package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
+import io.totominc.ExtraSkills.data.PlayerDataManager;
 import io.totominc.ExtraSkills.listeners.BlockListeners;
+import io.totominc.ExtraSkills.listeners.PlayerJoinQuitListeners;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
+  private PlayerDataManager playerDataManager;
 
   @Override
   public void onEnable() {
@@ -17,6 +21,8 @@ public class ExtraSkills extends JavaPlugin {
 
     instance = this;
     adventure = BukkitAudiences.create(this);
+
+    this.playerDataManager = new PlayerDataManager();
 
     this.registerCommands();
     this.registerEvents();
@@ -44,6 +50,10 @@ public class ExtraSkills extends JavaPlugin {
     return adventure;
   }
 
+  public PlayerDataManager getPlayerDataManager() {
+    return playerDataManager;
+  }
+
   private void registerCommands() {
     PluginCommand esreload = this.getCommand("esreload");
 
@@ -53,6 +63,9 @@ public class ExtraSkills extends JavaPlugin {
   }
 
   private void registerEvents() {
-    getServer().getPluginManager().registerEvents(new BlockListeners(), this);
+    PluginManager pluginManager = getServer().getPluginManager();
+
+    pluginManager.registerEvents(new BlockListeners(), this);
+    pluginManager.registerEvents(new PlayerJoinQuitListeners(), this);
   }
 }
