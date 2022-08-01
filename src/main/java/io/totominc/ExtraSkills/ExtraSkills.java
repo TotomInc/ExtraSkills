@@ -4,6 +4,7 @@ import io.totominc.ExtraSkills.commands.ReloadCommand;
 import io.totominc.ExtraSkills.data.PlayerDataManager;
 import io.totominc.ExtraSkills.listeners.BlockListeners;
 import io.totominc.ExtraSkills.listeners.PlayerJoinQuitListeners;
+import io.totominc.ExtraSkills.skills.mining.MiningLeveler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
@@ -67,5 +68,7 @@ public class ExtraSkills extends JavaPlugin {
 
     pluginManager.registerEvents(new BlockListeners(), this);
     pluginManager.registerEvents(new PlayerJoinQuitListeners(), this);
+
+    pluginManager.registerEvents(new MiningLeveler(), this);
   }
 }
