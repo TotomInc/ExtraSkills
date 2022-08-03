@@ -11,7 +11,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public final class PlayerJoinQuitListeners implements Listener {
   @EventHandler(priority = EventPriority.LOWEST)
   public void onPlayerJoinEvent(PlayerJoinEvent event) {
-    ExtraSkills.getInstance().getPlayerDataManager().addPlayerData(event.getPlayer().getUniqueId(), new PlayerData());
+    ExtraSkills.getInstance().getPlayerDataManager().addPlayerData(
+      event.getPlayer().getUniqueId(),
+      new PlayerData(event.getPlayer())
+    );
   }
 
   @EventHandler(priority = EventPriority.LOWEST)

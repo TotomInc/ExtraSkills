@@ -2,6 +2,7 @@ package io.totominc.ExtraSkills;
 
 import io.totominc.ExtraSkills.commands.ReloadCommand;
 import io.totominc.ExtraSkills.data.PlayerDataManager;
+import io.totominc.ExtraSkills.leveler.Leveler;
 import io.totominc.ExtraSkills.listeners.BlockListeners;
 import io.totominc.ExtraSkills.listeners.PlayerJoinQuitListeners;
 import io.totominc.ExtraSkills.skills.mining.MiningLeveler;
@@ -15,6 +16,7 @@ public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
   private PlayerDataManager playerDataManager;
+  private Leveler leveler;
 
   @Override
   public void onEnable() {
@@ -24,6 +26,7 @@ public class ExtraSkills extends JavaPlugin {
     adventure = BukkitAudiences.create(this);
 
     this.playerDataManager = new PlayerDataManager();
+    this.leveler = new Leveler();
 
     this.registerCommands();
     this.registerEvents();
@@ -52,7 +55,11 @@ public class ExtraSkills extends JavaPlugin {
   }
 
   public PlayerDataManager getPlayerDataManager() {
-    return playerDataManager;
+    return this.playerDataManager;
+  }
+
+  public Leveler getLeveler() {
+    return this.leveler;
   }
 
   private void registerCommands() {

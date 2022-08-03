@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.skills.mining;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 
@@ -11,12 +12,14 @@ public final class MiningSource {
     this.loadRewards();
   }
 
-  public EnumMap<Material, Double> getRewards() {
-    return rewards;
+  @Nullable
+  public Double getReward(Material material) {
+    return this.rewards.get(material);
   }
 
+  // TODO: load rewards from config file.
   private void loadRewards() {
-    this.rewards.put(Material.getMaterial("stone"), 1.00);
-    this.rewards.put(Material.getMaterial("cobblestone"), 0.25);
+    this.rewards.put(Material.getMaterial("STONE"), 1.00);
+    this.rewards.put(Material.getMaterial("COBBLESTONE"), 0.25);
   }
 }
