@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Skill {
-  MINING(new ArrayList<>(Collections.singleton(Ability.VEIN_MINER)));
+  MINING(new ArrayList<>(Collections.singleton(Ability.LUCKY_MINER)));
 
   private final List<Ability> abilities;
 

@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class MiningLeveler implements Listener {
   private final MiningSource miningSource = new MiningSource();
+  private final MiningAbilities miningAbilities = new MiningAbilities();
 
   // TODO: Implement blocked worlds.
   // TODO: Implement blocked regions with WorldGuard.
@@ -36,9 +37,12 @@ public final class MiningLeveler implements Listener {
       return;
     }
 
+    // Apply lucky miner from here.
+    this.miningAbilities.luckyMiner(event.getPlayer(), event.getBlock());
+
     Double experience = this.miningSource.getReward(event.getBlock().getType());
 
-    // Verify if block material is registered on the sources.
+    // Verify if block material is registered on the sources before adding experience.
     if (experience == null) {
       System.out.println("MiningLeveler.onBlockBreakEvent: block material not in MiningSource");
       return;

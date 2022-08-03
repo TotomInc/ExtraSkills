@@ -2,6 +2,7 @@ package io.totominc.ExtraSkills.data;
 
 import com.udojava.evalex.Expression;
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.abilities.Ability;
 import io.totominc.ExtraSkills.skills.Skill;
 import org.bukkit.entity.Player;
 
@@ -24,6 +25,14 @@ public final class PlayerData {
     for (Skill skill : Skill.values()) {
       this.playerSkillDataMap.put(skill, new PlayerSkillData(this.calculateSkillExperienceRequired(1)));
     }
+  }
+
+  public double getAbilityLevel(Ability ability) {
+    return this.getSkillLevel(ability.getAssociatedSkill()) / ability.getLevelUpRate();
+  }
+
+  public double getAbilityValue(Ability ability) {
+    return ability.getBaseValue() + this.getAbilityLevel(ability) * ability.getBaseValueGainedPerLevel();
   }
 
   public void addSkillExperience(Skill skill, double amount) {
