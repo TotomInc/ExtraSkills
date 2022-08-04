@@ -6,6 +6,7 @@ import io.totominc.ExtraSkills.data.PlayerDataManager;
 import io.totominc.ExtraSkills.leveler.Leveler;
 import io.totominc.ExtraSkills.listeners.BlockListeners;
 import io.totominc.ExtraSkills.listeners.PlayerJoinQuitListeners;
+import io.totominc.ExtraSkills.skills.SkillManager;
 import io.totominc.ExtraSkills.skills.mining.MiningLeveler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.command.PluginCommand;
@@ -17,6 +18,7 @@ public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
   private PlayerDataManager playerDataManager;
+  private SkillManager skillManager;
   private AbilityManager abilityManager;
   private Leveler leveler;
 
@@ -28,6 +30,7 @@ public class ExtraSkills extends JavaPlugin {
     adventure = BukkitAudiences.create(this);
 
     this.playerDataManager = new PlayerDataManager();
+    this.skillManager = new SkillManager();
     this.abilityManager = new AbilityManager();
     this.leveler = new Leveler();
 
@@ -59,6 +62,10 @@ public class ExtraSkills extends JavaPlugin {
 
   public PlayerDataManager getPlayerDataManager() {
     return this.playerDataManager;
+  }
+
+  public SkillManager getSkillManager() {
+    return this.skillManager;
   }
 
   public AbilityManager getAbilityManager() {

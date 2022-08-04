@@ -75,8 +75,8 @@ public final class AbilityManager {
           Ability.valueOf(ability.name()),
           new AbilityOption(
             isEnabled, baseValue, valueGainedPerLevel, unlockLevel, levelUpRate, maxLevel,
-            new AbilityOptionBlocks(this.loadAbilityBlocks(ability, blocks)),
-            new AbilityOptionEntities(this.loadAbilityEntities(ability, entities))
+            this.loadAbilityBlocks(ability, blocks),
+            this.loadAbilityEntities(ability, entities)
           )
         );
       }

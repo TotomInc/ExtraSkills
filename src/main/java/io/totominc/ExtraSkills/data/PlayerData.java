@@ -25,7 +25,7 @@ public final class PlayerData {
   // TODO: implement loading player skill-data save.
   public void loadSkillDataMap() {
     for (Skill skill : Skill.values()) {
-      this.playerSkillDataMap.put(skill, new PlayerSkillData(this.calculateSkillExperienceRequired(1)));
+      this.playerSkillDataMap.put(skill, new PlayerSkillData(this.calculateSkillExperienceRequired(skill, 1)));
     }
   }
 
@@ -69,7 +69,9 @@ public final class PlayerData {
     while (skillData.getExperience() >= skillData.getExperienceRequired()) {
       skillData.removeExperience(skillData.getExperienceRequired());
       skillData.addLevels(1);
-      skillData.setExperienceRequired(this.calculateSkillExperienceRequired(skillData.getLevel()));
+      skillData.setExperienceRequired(
+        this.calculateSkillExperienceRequired(skill, skillData.getLevel())
+      );
     }
   }
 
@@ -109,16 +111,10 @@ public final class PlayerData {
   /**
    * Use string expression to calculate experience required for a specific skill.
    */
-  private double calculateSkillExperienceRequired(double level) {
-    // TODO: load expression values from config file.
-    double base = 100d;
-    double power = 1.33d;
-
-    Expression expression = ExtraSkills.getInstance().getLeveler().getExperienceExpression();
+  private double calculateSkillExperienceRequired(Skill skill, double level) {
+    Expression expression = ExtraSkills.getInstance().getLeveler().getExperienceExpression(skill);
 
     expression.setVariable("level", BigDecimal.valueOf(level));
-    expression.setVariable("base", BigDecimal.valueOf(base));
-    expression.setVariable("power", BigDecimal.valueOf(power));
 
     return expression.eval().doubleValue();
   }

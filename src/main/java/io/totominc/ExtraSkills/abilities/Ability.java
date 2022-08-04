@@ -16,7 +16,7 @@ public enum Ability {
   }
 
   public Skill getAssociatedSkill() {
-    return associatedSkill;
+    return this.associatedSkill;
   }
 
   public boolean getHasBlockConfig() {

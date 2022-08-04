@@ -28,7 +28,7 @@ public final class MiningAbilities {
     if (
       abilityOption == null ||
       !abilityOption.isEnabled() ||
-      !abilityOption.blocks().blocks().contains(block.getType()) ||
+      !abilityOption.blocks().contains(block.getType()) ||
       playerData.getSkillLevel(Skill.MINING) < abilityOption.unlockLevel()
     ) {
       return;

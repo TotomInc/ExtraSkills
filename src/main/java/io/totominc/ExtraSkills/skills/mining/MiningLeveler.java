@@ -4,6 +4,7 @@ import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.skills.Skill;
 import io.totominc.ExtraSkills.utils.BlockUtils;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,7 +13,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
 public final class MiningLeveler implements Listener {
-  private final MiningSource miningSource = new MiningSource();
   private final MiningAbilities miningAbilities = new MiningAbilities();
 
   // TODO: Implement blocked worlds.
@@ -40,7 +40,9 @@ public final class MiningLeveler implements Listener {
     // Apply lucky miner from here.
     this.miningAbilities.luckyMiner(event.getPlayer(), event.getBlock());
 
-    Double experience = this.miningSource.getReward(event.getBlock().getType());
+    // Retrieve block experience gained from SkillOption stored inside SkillManager.
+    Material blockType = event.getBlock().getType();
+    Double experience = ExtraSkills.getInstance().getSkillManager().getSkillOption(Skill.MINING).blocks().get(blockType);
 
     // Verify if block material is registered on the sources before adding experience.
     if (experience == null) {

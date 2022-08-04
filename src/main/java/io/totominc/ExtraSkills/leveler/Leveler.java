@@ -13,9 +13,8 @@ public final class Leveler {
    *
    * @see <a href="https://github.com/uklimaschewski/EvalEx">EvalEx</a>
    */
-  // TODO: load experience expression from config.
-  public Expression getExperienceExpression() {
-    return new Expression("IF(level == 1, base, base * level * power)");
+  public Expression getExperienceExpression(Skill skill) {
+    return new Expression(ExtraSkills.getInstance().getSkillManager().getSkillOption(skill).experienceExpression());
   }
 
   // TODO: Implement experience multiplier per skill with permissions.
