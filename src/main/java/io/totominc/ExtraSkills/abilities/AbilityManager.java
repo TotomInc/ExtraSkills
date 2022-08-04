@@ -2,13 +2,17 @@ package io.totominc.ExtraSkills.abilities;
 
 import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.skills.Skill;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 public final class AbilityManager {
   private final HashMap<Ability, AbilityOption> abilityOptionMap = new HashMap<>();
@@ -64,12 +68,42 @@ public final class AbilityManager {
         double unlockLevel = fileConfig.getInt(abilityPath + "." + AbilityConfigProperty.UNLOCK_LEVEL.path);
         double levelUpRate = fileConfig.getInt(abilityPath + "." + AbilityConfigProperty.LEVEL_UP_RATE.path);
         double maxLevel = fileConfig.getInt(abilityPath + "." + AbilityConfigProperty.MAX_LEVEL.path);
+        List<String> blocks = fileConfig.getStringList(abilityPath + "." + AbilityConfigProperty.BLOCKS.path);
+        List<String> entities = fileConfig.getStringList(abilityPath + "." + AbilityConfigProperty.ENTITIES.path);
 
         this.abilityOptionMap.put(
           Ability.valueOf(ability.name()),
-          new AbilityOption(isEnabled, baseValue, valueGainedPerLevel, unlockLevel, levelUpRate, maxLevel)
+          new AbilityOption(
+            isEnabled, baseValue, valueGainedPerLevel, unlockLevel, levelUpRate, maxLevel,
+            new AbilityOptionBlocks(this.loadAbilityBlocks(ability, blocks)),
+            new AbilityOptionEntities(this.loadAbilityEntities(ability, entities))
+          )
         );
       }
     }
+  }
+
+  private HashSet<Material> loadAbilityBlocks(Ability ability, List<String> blocks) {
+    HashSet<Material> blocksMap = new HashSet<>();
+
+    if (ability.getHasBlockConfig() && blocks.size() > 0) {
+      for (String block : blocks) {
+        blocksMap.add(Material.valueOf(block.toUpperCase()));
+      }
+    }
+
+    return blocksMap;
+  }
+
+  private HashSet<EntityType> loadAbilityEntities(Ability ability, List<String> entities) {
+    HashSet<EntityType> entitiesMap = new HashSet<>();
+
+    if (ability.getHasEntityConfig() && entities.size() > 0) {
+      for (String block : entities) {
+        entitiesMap.add(EntityType.valueOf(block.toUpperCase()));
+      }
+    }
+
+    return entitiesMap;
   }
 }
