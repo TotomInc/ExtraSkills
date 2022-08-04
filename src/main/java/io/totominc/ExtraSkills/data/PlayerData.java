@@ -3,8 +3,10 @@ package io.totominc.ExtraSkills.data;
 import com.udojava.evalex.Expression;
 import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.abilities.Ability;
+import io.totominc.ExtraSkills.abilities.AbilityOption;
 import io.totominc.ExtraSkills.skills.Skill;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -27,12 +29,21 @@ public final class PlayerData {
     }
   }
 
+  @Nullable
+  public AbilityOption getAbilityOption(Ability ability) {
+    return ExtraSkills.getInstance().getAbilityManager().getAbilityOption(ability);
+  }
+
   public double getAbilityLevel(Ability ability) {
-    return this.getSkillLevel(ability.getAssociatedSkill()) / ability.getLevelUpRate();
+    AbilityOption abilityOption = ExtraSkills.getInstance().getAbilityManager().getAbilityOption(ability);
+
+    return this.getSkillLevel(ability.getAssociatedSkill()) / abilityOption.levelUpRate();
   }
 
   public double getAbilityValue(Ability ability) {
-    return ability.getBaseValue() + this.getAbilityLevel(ability) * ability.getBaseValueGainedPerLevel();
+    AbilityOption abilityOption = ExtraSkills.getInstance().getAbilityManager().getAbilityOption(ability);
+
+    return abilityOption.baseValue() + this.getAbilityLevel(ability) * abilityOption.valueGainedPerLevel();
   }
 
   public void addSkillExperience(Skill skill, double amount) {

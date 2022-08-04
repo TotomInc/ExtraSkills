@@ -2,7 +2,9 @@ package io.totominc.ExtraSkills.skills.mining;
 
 import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.abilities.Ability;
+import io.totominc.ExtraSkills.abilities.AbilityOption;
 import io.totominc.ExtraSkills.data.PlayerData;
+import io.totominc.ExtraSkills.skills.Skill;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -36,6 +38,16 @@ public final class MiningAbilities {
     PlayerData playerData = ExtraSkills.getInstance().getPlayerDataManager().getPlayerData(player.getUniqueId());
 
     if (playerData == null) {
+      return;
+    }
+
+    AbilityOption abilityOption = playerData.getAbilityOption(Ability.LUCKY_MINER);
+
+    if (
+      abilityOption == null ||
+      !abilityOption.isEnabled() ||
+      playerData.getSkillLevel(Skill.MINING) < abilityOption.unlockLevel()
+    ) {
       return;
     }
 

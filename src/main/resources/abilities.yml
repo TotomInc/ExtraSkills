@@ -1,0 +1,34 @@
+# Abilities configuration.
+#
+# enabled
+#   true/false, enable or disable the ability.
+#
+# base_value
+#   number, base value of the ability, it's a percentage most of the time (0 - 100).
+#
+# value_gained_per_level
+#   number, value added to the base value, multiplied by the ability level.
+#   skill_level / level_up_rate * value_gained_per_level
+#
+# unlock_level
+#   number, skill level required to unlock this ability.
+#
+# level_up_rate
+#   number, level of the ability based on the skill level.
+#   skill_level / level_up_rate
+#
+# max_level
+#   number, maximum level of the ability.
+
+abilities:
+  mining:
+    lucky_miner:
+      enabled: true
+      base_value: 2.0
+      value_gained_per_level: 2.0
+      unlock_level: 5
+      level_up_rate: 5
+      max_level: 10
+
+# Please, do not touch. Used for plugin configuration versioning.
+config_version: 1
