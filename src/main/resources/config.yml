@@ -1,0 +1,15 @@
+# General configuration.
+#
+# Colors from FlatUIColors (Aussie palette): https://flatuicolors.com/palette/au
+# MiniMessage format preview: https://webui.adventure.kyori.net/
+
+action_bar:
+  enabled: true
+  enable_for_skill_experience_gained: true
+  skill_experience_gained_format: "<bold><#f0932b>+{reward}</bold> <#ffbe76>{skill_lowercase} experience <italic><#f6e58d>({experience}/{experienceRequired})"
+
+title:
+  enabled: true
+  enable_for_skill_level_up: true
+  skill_level_up_title: "<bold><#f0932b>Level-up!"
+  skill_level_up_description: "<bold><#f6e58d>{skill_capitalize} <#ffbe76>skill is now level <#f0932b>{level}<#ffbe76>!"
