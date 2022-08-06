@@ -6,7 +6,7 @@
 action_bar:
   enabled: true
   enable_for_skill_experience_gained: true
-  skill_experience_gained_format: "<bold><#f0932b>+{reward}</bold> <#ffbe76>{skill_lowercase} experience <italic><#f6e58d>({experience}/{experienceRequired})"
+  skill_experience_gained_format: "<#f0932b>+{reward} <#ffbe76>{skill_lowercase} experience <#f6e58d>({experience_2f}/{experience_required})"
 
 title:
   enabled: true

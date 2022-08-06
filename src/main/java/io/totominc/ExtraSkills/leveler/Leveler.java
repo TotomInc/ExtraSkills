@@ -2,6 +2,7 @@ package io.totominc.ExtraSkills.leveler;
 
 import com.udojava.evalex.Expression;
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
 import net.kyori.adventure.text.Component;
@@ -40,11 +41,20 @@ public final class Leveler {
       return;
     }
 
-    playerData.addSkillExperience(skill, amount * getMultiplier());
+    double experience = amount * getMultiplier();
+
+    playerData.addSkillExperience(skill, experience);
     playerData.trySkillLevelup(skill);
 
-    ExtraSkills.getAdventure().player(player).sendActionBar(
-      Component.text(skill.name() + " lvl. " + playerData.getSkillLevel(skill) + " exp. " + playerData.getSkillExperience(skill) + "/" + playerData.getSkillExperienceRequired(skill))
-    );
+    System.out.println("Leveler.addExperience: " + ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED));
+
+    if (
+      ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&
+      ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLE_SKILL_EXPERIENCE)
+    ) {
+      ExtraSkills.getAdventure().player(player).sendActionBar(
+        playerData.getSkillExperienceMessage(skill, experience)
+      );
+    }
   }
 }

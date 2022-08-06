@@ -1,21 +1,15 @@
 package io.totominc.ExtraSkills.configuration;
 
 import io.totominc.ExtraSkills.ExtraSkills;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public final class OptionManager {
   private final HashMap<Option, OptionValue> optionsMap = new HashMap<>();
 
   public OptionManager() {
-    try {
-      this.loadOptions();
-    } catch (InvalidConfigurationException ignored) {}
+    this.loadOptions();
   }
 
   public boolean getBoolean(Option option) {
@@ -34,14 +28,8 @@ public final class OptionManager {
     return this.optionsMap.get(option).asString();
   }
 
-  private void loadOptions() throws InvalidConfigurationException {
-    InputStream configStream = ExtraSkills.getInstance().getResource("config.yml");
-
-    if (configStream == null) {
-      throw new InvalidConfigurationException("Unable to load configuration, no \"config.yml\" file found.");
-    }
-
-    FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(configStream));
+  private void loadOptions() {
+    FileConfiguration config = ExtraSkills.getInstance().getConfig();
 
     for (Option option : Option.values()) {
       String path = option.getPath();

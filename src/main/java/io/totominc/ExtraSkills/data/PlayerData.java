@@ -4,7 +4,12 @@ import com.udojava.evalex.Expression;
 import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.abilities.Ability;
 import io.totominc.ExtraSkills.abilities.AbilityOption;
+import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.ExtraSkills.utils.TextUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.apache.commons.text.StringSubstitutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -106,6 +111,25 @@ public final class PlayerData {
     }
 
     return skillData.getExperienceRequired();
+  }
+
+  public Component getSkillExperienceMessage(Skill skill, double reward) {
+    String template = ExtraSkills.getInstance().getOptionManager().getString(Option.ACTION_BAR_SKILL_EXPERIENCE_FORMAT);
+    Map<String, String> values = new HashMap<>();
+    StringSubstitutor stringSubstitutor = new StringSubstitutor(values, "{", "}");
+
+    values.put("reward", TextUtils.get2DecimalsString(reward));
+    values.put("skill", TextUtils.getCapitalizedString(skill.name()));
+    values.put("skill_capitalize", skill.name().toUpperCase());
+    values.put("skill_lowercase", skill.name().toLowerCase());
+    values.put("experience", TextUtils.getDoubleWithoutDecimals(this.getSkillExperience(skill)));
+    values.put("experience_2f", TextUtils.get2DecimalsString(this.getSkillExperience(skill)));
+    values.put("experience_required", TextUtils.getDoubleWithoutDecimals(this.getSkillExperienceRequired(skill)));
+    values.put("experience_required_2f", TextUtils.get2DecimalsString(this.getSkillExperienceRequired(skill)));
+    values.put("level", TextUtils.getDoubleWithoutDecimals(this.getSkillLevel(skill)));
+    values.put("player_name", this.player.getDisplayName());
+
+    return MiniMessage.miniMessage().deserialize(stringSubstitutor.replace(template));
   }
 
   /**
