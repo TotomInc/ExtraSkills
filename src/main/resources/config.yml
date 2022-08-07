@@ -29,6 +29,13 @@ title:
   skill_level_up_title: "<bold><#f0932b>Level-up!"
   skill_level_up_description: "<bold><#f6e58d>{skill_capitalize} <#ffbe76>skill is now level <#f0932b>{level}<#ffbe76>!"
 
+# List of game-modes where the plugin should not be enabled. Skill and abilities won't work
+# while the player is in one of these game-modes.
+disabled_gamemodes:
+  - CREATIVE
+  - ADVENTURE
+  - SPECTATOR
+
 # List of worlds where the plugin should not be enabled. Skills and abilities won't work
 # in these worlds.
 disabled_worlds:

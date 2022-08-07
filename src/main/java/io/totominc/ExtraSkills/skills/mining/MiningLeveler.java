@@ -20,10 +20,15 @@ public final class MiningLeveler implements Listener {
   private final ExtraSkills instance;
   private final MiningAbilities miningAbilities = new MiningAbilities();
   private final List<String> disabledWorlds = new ArrayList<>();
+  private final List<GameMode> disabledGamemodes = new ArrayList<>();
 
   public MiningLeveler(ExtraSkills instance) {
     this.instance = instance;
     this.disabledWorlds.addAll(instance.getOptionManager().getList(Option.DISABLED_WORLDS));
+
+    for (String gamemode : instance.getOptionManager().getList(Option.DISABLED_GAMEMODES)) {
+      this.disabledGamemodes.add(GameMode.valueOf(gamemode));
+    }
   }
 
   // TODO: Implement blocked regions with WorldGuard.
@@ -35,9 +40,9 @@ public final class MiningLeveler implements Listener {
       return;
     }
 
-    // Allows only in Survival game-mode.
-    if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) {
-      System.out.println("MiningLeveler.onBlockBreakEvent: player in creative");
+    // Allow only in game-modes defined in the configuration file.
+    if (this.disabledGamemodes.contains(event.getPlayer().getGameMode())) {
+      System.out.println("MiningLeveler.onBlockBreakEvent: player in disabled gamemode \"" + event.getPlayer().getGameMode() + "\"");
       return;
     }
 

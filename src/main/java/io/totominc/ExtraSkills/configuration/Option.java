@@ -4,6 +4,7 @@ public enum Option {
   ACTION_BAR_ENABLED("action_bar.enabled", OptionType.BOOLEAN),
   ACTION_BAR_ENABLE_SKILL_EXPERIENCE("action_bar.enable_for_skill_experience_gained", OptionType.BOOLEAN),
   ACTION_BAR_SKILL_EXPERIENCE_FORMAT("action_bar.skill_experience_gained_format", OptionType.STRING),
+  DISABLED_GAMEMODES("disabled_gamemodes", OptionType.LIST),
   DISABLED_WORLDS("disabled_worlds", OptionType.LIST),
   CHECK_PLAYER_BLOCK_PLACED("check_player_block_placed", OptionType.BOOLEAN);
 
