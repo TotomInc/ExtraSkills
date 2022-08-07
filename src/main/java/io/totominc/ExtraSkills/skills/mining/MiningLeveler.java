@@ -1,6 +1,7 @@
 package io.totominc.ExtraSkills.skills.mining;
 
 import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.skills.Skill;
 import io.totominc.ExtraSkills.utils.BlockUtils;
 import org.bukkit.GameMode;
@@ -12,13 +13,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class MiningLeveler implements Listener {
-  private final MiningAbilities miningAbilities = new MiningAbilities();
+import java.util.ArrayList;
+import java.util.List;
 
-  // TODO: Implement blocked worlds.
+public final class MiningLeveler implements Listener {
+  private final ExtraSkills instance;
+  private final MiningAbilities miningAbilities = new MiningAbilities();
+  private final List<String> disabledWorlds = new ArrayList<>();
+
+  public MiningLeveler(ExtraSkills instance) {
+    this.instance = instance;
+    this.disabledWorlds.addAll(instance.getOptionManager().getList(Option.DISABLED_WORLDS));
+  }
+
   // TODO: Implement blocked regions with WorldGuard.
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
   public void onBlockBreakEvent(@NotNull BlockBreakEvent event) {
+    // Verify if the block has not been mined in a disabled world from the configuration file.
+    if (this.disabledWorlds.contains(event.getBlock().getWorld().getName())) {
+      System.out.println("MiningLeveler.onBlockBreakEvent: block mined in disabled world");
+      return;
+    }
+
     // Allows only in Survival game-mode.
     if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) {
       System.out.println("MiningLeveler.onBlockBreakEvent: player in creative");
@@ -42,7 +58,7 @@ public final class MiningLeveler implements Listener {
 
     // Retrieve block experience gained from SkillOption stored inside SkillManager.
     Material blockType = event.getBlock().getType();
-    Double experience = ExtraSkills.getInstance().getSkillManager().getSkillOption(Skill.MINING).blocks().get(blockType);
+    Double experience = this.instance.getSkillManager().getSkillOption(Skill.MINING).blocks().get(blockType);
 
     // Verify if block material is registered on the sources before adding experience.
     if (experience == null) {
@@ -53,6 +69,6 @@ public final class MiningLeveler implements Listener {
     System.out.println("MiningLeveler.onBlockBreakEvent: block material reward " + experience);
 
     // Add skill experience to the player.
-    ExtraSkills.getInstance().getLeveler().addExperience(event.getPlayer(), Skill.MINING, experience);
+    this.instance.getLeveler().addExperience(event.getPlayer(), Skill.MINING, experience);
   }
 }

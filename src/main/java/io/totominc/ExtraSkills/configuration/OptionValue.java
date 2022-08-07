@@ -1,5 +1,8 @@
 package io.totominc.ExtraSkills.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class OptionValue {
   private Object value;
 
@@ -37,5 +40,19 @@ public final class OptionValue {
     }
 
     return String.valueOf(this.value);
+  }
+
+  public List<String> asList() {
+    List<String> strings = new ArrayList<>();
+
+    if (this.value instanceof List<?>) {
+      for (Object object : (List<?>) value) {
+        if (object instanceof String) {
+          strings.add((String) object);
+        }
+      }
+    }
+
+    return strings;
   }
 }

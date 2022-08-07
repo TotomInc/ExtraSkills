@@ -4,8 +4,23 @@
 # MiniMessage format preview: https://webui.adventure.kyori.net/
 
 action_bar:
+  # If true, action-bar is globally enabled.
   enabled: true
+  # If true, action-bar is enabled for the "skill experience gained" event.
   enable_for_skill_experience_gained: true
+  # Action-bar message format for the "skill experience gained" event.
+  #
+  # Valid placeholder values are:
+  #   {reward}: experience amount gained in this event.
+  #   {skill}: name of the skill, the name is formatted like "Example Skill".
+  #   {skill_capitalize}: name of the skill, the name is formatted all in uppercase letters like "EXAMPLE SKILL".
+  #   {skill_lowercase}: name of the skill, the name is formatted all in lowercase letter like "example skill".
+  #   {experience}: current amount of experience for this skill. Experience amount is formatted without decimals.
+  #   {experience_2f}: current amount of experience for this skill. Experience amount is formatted with 2 decimals.
+  #   {experience_required}: amount of experience required for level-up. Experience amount is formatted without decimals.
+  #   {experience_required_2f}: amount of experience required for level-up. Experience amount is formatted with 2 decimals.
+  #   {level}: current player skill level.
+  #   {player_name}: name of the player.
   skill_experience_gained_format: "<#f0932b>+{reward} <#ffbe76>{skill_lowercase} experience <#f6e58d>({experience_2f}/{experience_required})"
 
 title:
@@ -13,3 +28,15 @@ title:
   enable_for_skill_level_up: true
   skill_level_up_title: "<bold><#f0932b>Level-up!"
   skill_level_up_description: "<bold><#f6e58d>{skill_capitalize} <#ffbe76>skill is now level <#f0932b>{level}<#ffbe76>!"
+
+# List of worlds where the plugin should not be enabled. Skills and abilities won't work
+# in these worlds.
+disabled_worlds:
+  - example_world
+
+# If true, plugin will check if a block has been placed by a player, which once mined
+# won't give skill experience.
+check_player_block_placed: true
+
+# Please, do not touch. Used for plugin configuration versioning.
+config_version: 1

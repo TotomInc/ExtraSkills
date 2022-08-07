@@ -36,3 +36,6 @@ skills:
       NETHER_GOLD_ORE: 4
       NETHER_QUARTZ_ORE: 2
       ANCIENT_DEBRIS: 100
+
+# Please, do not touch. Used for plugin configuration versioning.
+config_version: 1

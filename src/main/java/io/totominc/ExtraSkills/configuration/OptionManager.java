@@ -4,6 +4,7 @@ import io.totominc.ExtraSkills.ExtraSkills;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
+import java.util.List;
 
 public final class OptionManager {
   private final HashMap<Option, OptionValue> optionsMap = new HashMap<>();
@@ -28,6 +29,10 @@ public final class OptionManager {
     return this.optionsMap.get(option).asString();
   }
 
+  public List<String> getList(Option option) {
+    return this.optionsMap.get(option).asList();
+  }
+
   private void loadOptions() {
     FileConfiguration config = ExtraSkills.getInstance().getConfig();
 
@@ -42,6 +47,8 @@ public final class OptionManager {
         this.optionsMap.put(option, new OptionValue(config.getDouble(path)));
       } else if (option.getType() == OptionType.STRING) {
         this.optionsMap.put(option, new OptionValue(config.getString(path)));
+      } else if (option.getType() == OptionType.LIST) {
+        this.optionsMap.put(option, new OptionValue(config.getList(path)));
       }
     }
   }

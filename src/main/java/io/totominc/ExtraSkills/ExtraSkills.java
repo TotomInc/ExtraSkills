@@ -18,8 +18,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
-  private PlayerDataManager playerDataManager;
   private OptionManager optionManager;
+  private PlayerDataManager playerDataManager;
   private SkillManager skillManager;
   private AbilityManager abilityManager;
   private Leveler leveler;
@@ -31,8 +31,9 @@ public class ExtraSkills extends JavaPlugin {
     instance = this;
     adventure = BukkitAudiences.create(this);
 
-    this.playerDataManager = new PlayerDataManager();
+    // OptionManager should be first, as others classes may depend on some options loaded.
     this.optionManager = new OptionManager();
+    this.playerDataManager = new PlayerDataManager();
     this.skillManager = new SkillManager();
     this.abilityManager = new AbilityManager();
     this.leveler = new Leveler();
@@ -63,12 +64,12 @@ public class ExtraSkills extends JavaPlugin {
     return adventure;
   }
 
-  public PlayerDataManager getPlayerDataManager() {
-    return this.playerDataManager;
-  }
-
   public OptionManager getOptionManager() {
     return this.optionManager;
+  }
+
+  public PlayerDataManager getPlayerDataManager() {
+    return this.playerDataManager;
   }
 
   public SkillManager getSkillManager() {
@@ -94,9 +95,9 @@ public class ExtraSkills extends JavaPlugin {
   private void registerEvents() {
     PluginManager pluginManager = getServer().getPluginManager();
 
-    pluginManager.registerEvents(new BlockListeners(), this);
+    pluginManager.registerEvents(new BlockListeners(this), this);
     pluginManager.registerEvents(new PlayerJoinQuitListeners(), this);
 
-    pluginManager.registerEvents(new MiningLeveler(), this);
+    pluginManager.registerEvents(new MiningLeveler(this), this);
   }
 }
