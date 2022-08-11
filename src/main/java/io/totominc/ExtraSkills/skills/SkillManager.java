@@ -61,16 +61,16 @@ public final class SkillManager {
         throw new InvalidConfigurationException("Missing \"sources\" section in \"skills.yml\" configuration file.");
       }
 
-      if (skill.getSourceType().equals(SkillSourceType.BLOCK)) {
-        this.skillOptionMap.put(
-          Skill.valueOf(skill.name()),
-          new SkillOption(
-            isEnabled, maxLevel, experienceExpression,
-            this.loadSkillBlocksSource(skill, sources.getValues(false)),
-            this.loadSkillEntitiesSource(skill, sources.getValues(false))
-          )
-        );
-      }
+      this.skillOptionMap.put(
+        Skill.valueOf(skill.name()),
+        new SkillOption(
+          isEnabled,
+          maxLevel,
+          experienceExpression,
+          this.loadSkillBlocksSource(skill, sources.getValues(false)),
+          this.loadSkillEntitiesSource(skill, sources.getValues(false))
+        )
+      );
     }
   }
 

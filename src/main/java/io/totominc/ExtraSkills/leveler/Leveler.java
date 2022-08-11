@@ -5,7 +5,6 @@ import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public final class Leveler {
@@ -45,8 +44,6 @@ public final class Leveler {
 
     playerData.addSkillExperience(skill, experience);
     playerData.trySkillLevelup(skill);
-
-    System.out.println("Leveler.addExperience: " + ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED));
 
     if (
       ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&

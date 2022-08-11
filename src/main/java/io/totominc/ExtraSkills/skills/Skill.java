@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Skill {
-  MINING(new ArrayList<>(Collections.singleton(Ability.LUCKY_MINER)), SkillSourceType.BLOCK);
+  MINING(new ArrayList<>(Collections.singleton(Ability.LUCKY_MINER)), SkillSourceType.BLOCK),
+  COMBAT(new ArrayList<>(Collections.emptyList()), SkillSourceType.ENTITY);
 
   private final List<Ability> abilities;
   private final SkillSourceType sourceType;

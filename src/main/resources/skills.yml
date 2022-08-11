@@ -36,6 +36,38 @@ skills:
       NETHER_GOLD_ORE: 4
       NETHER_QUARTZ_ORE: 2
       ANCIENT_DEBRIS: 100
+  combat:
+    enabled: true
+    max_level: 100
+    experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
+    sources:
+      SKELETON: 2
+      ZOMBIE: 2
+      ZOMBIE_VILLAGER: 5
+      PILLAGER: 2
+      RAVAGER: 2
+      SPIDER: 1.5
+      CAVE_SPIDER: 2
+      WITCH: 4
+      CREEPER: 3
+      PHANTOM: 3
+      SLIME: 1
+      MAGMA_CUBE: 1
+      GHAST: 5
+      BLAZE: 3
+      HOGLIN: 10
+      PIGLIN: 2
+      PIGLIN_BRUTE: 2
+      ENDERMAN: 5
+      ENDER_DRAGON: 500
+      WITHER: 250
+      ELDER_GUARDIAN: 10
+      WITHER_SKELETON: 5
+      EVOKER: 7.5
+      VEX: 7.5
+      VINDICATOR: 5
+      ILLUSIONER: 5
+
 
 # Please, do not touch. Used for plugin configuration versioning.
 config_version: 1
