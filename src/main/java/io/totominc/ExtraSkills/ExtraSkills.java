@@ -37,7 +37,7 @@ public class ExtraSkills extends JavaPlugin {
     this.playerDataManager = new PlayerDataManager();
     this.skillManager = new SkillManager();
     this.abilityManager = new AbilityManager();
-    this.leveler = new Leveler();
+    this.leveler = new Leveler(this);
 
     this.registerCommands();
     this.registerEvents();

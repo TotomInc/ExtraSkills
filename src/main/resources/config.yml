@@ -23,6 +23,19 @@ action_bar:
   #   {player_name}: name of the player.
   skill_experience_gained_format: "<#f0932b>+{reward} <#ffbe76>{skill_lowercase} experience <#f6e58d>({experience_2f}/{experience_required})"
 
+boss_bar:
+  # If true, boss-bar is globally enabled.
+  enabled: true
+  # Type of the boss-bar, can be: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20.
+  type: PROGRESS
+  # Color of the boss-bar, can be: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+  color: PURPLE
+  # If true, a boss-bar is displayed for the "skill experience gained" event.
+  enable_for_skill_experience_gained: true
+  # Boss-bar message format for the "skill experience gained" event.
+  # Please check documentation for possible placeholder values.
+  skill_experience_gained_format: "<#ffbe76>{skill} <#f0932b>{experience_2f}/{experience_required} <f6e58d>(lvl. {level})"
+
 title:
   enabled: true
   enable_for_skill_level_up: true

@@ -113,8 +113,19 @@ public final class PlayerData {
     return skillData.getExperienceRequired();
   }
 
-  public Component getSkillExperienceMessage(Skill skill, double reward) {
+  public Component getActionBarSkillExperienceMessage(Skill skill, double reward) {
     String template = ExtraSkills.getInstance().getOptionManager().getString(Option.ACTION_BAR_SKILL_EXPERIENCE_FORMAT);
+
+    return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
+  }
+
+  public Component getBossBarSkillExperienceMessage(Skill skill, double reward) {
+    String template = ExtraSkills.getInstance().getOptionManager().getString(Option.BOSS_BAR_SKILL_EXPERIENCE_FORMAT);
+
+    return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
+  }
+
+  private String parseSkillExperienceMessage(Skill skill, String message, double reward) {
     Map<String, String> values = new HashMap<>();
     StringSubstitutor stringSubstitutor = new StringSubstitutor(values, "{", "}");
 
@@ -129,7 +140,7 @@ public final class PlayerData {
     values.put("level", TextUtils.getDoubleWithoutDecimals(this.getSkillLevel(skill)));
     values.put("player_name", this.player.getDisplayName());
 
-    return MiniMessage.miniMessage().deserialize(stringSubstitutor.replace(template));
+    return stringSubstitutor.replace(message);
   }
 
   /**

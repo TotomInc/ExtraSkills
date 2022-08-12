@@ -5,9 +5,16 @@ import io.totominc.ExtraSkills.ExtraSkills;
 import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
+import net.kyori.adventure.bossbar.BossBar;
 import org.bukkit.entity.Player;
 
 public final class Leveler {
+  private final ExtraSkills instance;
+
+  public Leveler(ExtraSkills instance) {
+    this.instance = instance;
+  }
+
   /**
    * EvalEx expression representation from a string.
    *
@@ -46,11 +53,29 @@ public final class Leveler {
     playerData.trySkillLevelup(skill);
 
     if (
-      ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&
-      ExtraSkills.getInstance().getOptionManager().getBoolean(Option.ACTION_BAR_ENABLE_SKILL_EXPERIENCE)
+      this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&
+      this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLE_SKILL_EXPERIENCE)
     ) {
       ExtraSkills.getAdventure().player(player).sendActionBar(
-        playerData.getSkillExperienceMessage(skill, experience)
+        playerData.getActionBarSkillExperienceMessage(skill, experience)
+      );
+    }
+
+    if (
+      this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLED) &&
+      this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLE_SKILL_EXPERIENCE)
+    ) {
+      float progression = (float) (playerData.getSkillExperience(skill) / playerData.getSkillExperienceRequired(skill));
+      BossBar.Color bossBarColor = BossBar.Color.valueOf(Option.BOSS_BAR_COLOR.name());
+      BossBar.Overlay bossBarOverlay = BossBar.Overlay.valueOf(Option.BOSS_BAR_TYPE.name());
+
+      ExtraSkills.getAdventure().player(player).showBossBar(
+        BossBar.bossBar(
+          playerData.getBossBarSkillExperienceMessage(skill, experience),
+          progression,
+          bossBarColor,
+          bossBarOverlay
+        )
       );
     }
   }
