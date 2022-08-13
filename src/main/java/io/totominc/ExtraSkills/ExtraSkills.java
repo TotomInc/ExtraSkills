@@ -56,6 +56,8 @@ public class ExtraSkills extends JavaPlugin {
 
   @Override
   public void onDisable() {
+    this.saveOnlinePlayers();
+
     instance = null;
 
     if (adventure != null) {
@@ -130,6 +132,16 @@ public class ExtraSkills extends JavaPlugin {
       }
 
       this.getPlayerStorageManager().loadPlayerData(player);
+    }
+  }
+
+  private void saveOnlinePlayers() {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      if (!player.isOnline()) {
+        return;
+      }
+
+      this.playerStorageManager.savePlayerData(player, false);
     }
   }
 }
