@@ -68,6 +68,12 @@ public final class BossBarManager {
     new BukkitRunnable() {
       @Override
       public void run() {
+        // Verify if the data is present, because if player leaves too fast the data
+        // that we try to access below is null.
+        if (!bossBarMap.containsKey(uuid) || !actionIndexMap.containsKey(uuid)) {
+          return;
+        }
+
         BossBar currentBossBar = bossBarMap.get(uuid);
         int currentActionIndex = actionIndexMap.get(uuid);
 
