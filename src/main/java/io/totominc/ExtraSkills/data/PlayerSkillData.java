@@ -17,6 +17,10 @@ public final class PlayerSkillData {
     return this.experienceRequired;
   }
 
+  public void setExperience(double amount) {
+    this.experience = amount;
+  }
+
   public void addExperience(double amount) {
     this.experience += amount;
   }
@@ -27,6 +31,10 @@ public final class PlayerSkillData {
 
   public double getExperience() {
     return this.experience;
+  }
+
+  public void setLevel(double level) {
+    this.level = level;
   }
 
   public void addLevels(double level) {

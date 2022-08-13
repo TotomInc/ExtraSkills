@@ -86,6 +86,17 @@ public final class PlayerData {
     return hasLevelUp;
   }
 
+  public void setSkillLevel(Skill skill, double level) {
+    PlayerSkillData skillData = playerSkillDataMap.get(skill);
+
+    if (skillData == null) {
+      System.out.println("PlayerData.setSkillLevel: no skill found \"" + skill.toString() + "\"");
+      return;
+    }
+
+    skillData.setLevel(level);
+  }
+
   public double getSkillLevel(Skill skill) {
     PlayerSkillData skillData = playerSkillDataMap.get(skill);
 
@@ -95,6 +106,17 @@ public final class PlayerData {
     }
 
     return skillData.getLevel();
+  }
+
+  public void setSkillExperience(Skill skill, double experience) {
+    PlayerSkillData skillData = playerSkillDataMap.get(skill);
+
+    if (skillData == null) {
+      System.out.println("PlayerData.setSkillLevel: no skill found \"" + skill.toString() + "\"");
+      return;
+    }
+
+    skillData.setExperience(experience);
   }
 
   public double getSkillExperience(Skill skill) {

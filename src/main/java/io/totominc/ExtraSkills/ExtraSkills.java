@@ -5,6 +5,8 @@ import io.totominc.ExtraSkills.commands.ReloadCommand;
 import io.totominc.ExtraSkills.configuration.OptionManager;
 import io.totominc.ExtraSkills.data.BossBarManager;
 import io.totominc.ExtraSkills.data.PlayerDataManager;
+import io.totominc.ExtraSkills.data.storage.PlayerStorageManager;
+import io.totominc.ExtraSkills.data.storage.YamlPlayerStorageManager;
 import io.totominc.ExtraSkills.leveler.Leveler;
 import io.totominc.ExtraSkills.listeners.BlockListeners;
 import io.totominc.ExtraSkills.listeners.PlayerJoinQuitListeners;
@@ -22,6 +24,7 @@ public class ExtraSkills extends JavaPlugin {
   private static BukkitAudiences adventure;
   private OptionManager optionManager;
   private BossBarManager bossBarManager;
+  private PlayerStorageManager playerStorageManager;
   private PlayerDataManager playerDataManager;
   private SkillManager skillManager;
   private AbilityManager abilityManager;
@@ -37,6 +40,8 @@ public class ExtraSkills extends JavaPlugin {
     // OptionManager should be first, as others classes may depend on some options loaded.
     this.optionManager = new OptionManager();
     this.bossBarManager = new BossBarManager();
+    // In the future, we should support more storage providers such as MySQL, JSON or MongoDB.
+    this.playerStorageManager = new YamlPlayerStorageManager(this);
     this.playerDataManager = new PlayerDataManager();
     this.skillManager = new SkillManager();
     this.abilityManager = new AbilityManager();
@@ -74,6 +79,10 @@ public class ExtraSkills extends JavaPlugin {
 
   public BossBarManager getBossBarManager() {
     return this.bossBarManager;
+  }
+
+  public PlayerStorageManager getPlayerStorageManager() {
+    return this.playerStorageManager;
   }
 
   public PlayerDataManager getPlayerDataManager() {
