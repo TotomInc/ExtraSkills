@@ -14,7 +14,9 @@ import io.totominc.ExtraSkills.skills.SkillManager;
 import io.totominc.ExtraSkills.skills.combat.CombatLeveler;
 import io.totominc.ExtraSkills.skills.mining.MiningLeveler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -49,6 +51,7 @@ public class ExtraSkills extends JavaPlugin {
 
     this.registerCommands();
     this.registerEvents();
+    this.registerOnlinePlayers();
   }
 
   @Override
@@ -117,5 +120,16 @@ public class ExtraSkills extends JavaPlugin {
 
     pluginManager.registerEvents(new CombatLeveler(this), this);
     pluginManager.registerEvents(new MiningLeveler(this), this);
+  }
+
+  private void registerOnlinePlayers() {
+    // Loop on all online players and load their PlayerData from a save-file.
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      if (!player.isOnline()) {
+        return;
+      }
+
+      this.getPlayerStorageManager().loadPlayerData(player);
+    }
   }
 }
