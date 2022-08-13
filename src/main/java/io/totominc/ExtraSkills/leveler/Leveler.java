@@ -6,6 +6,7 @@ import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
 import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.title.TitlePart;
 import org.bukkit.entity.Player;
 
 public final class Leveler {
@@ -50,7 +51,23 @@ public final class Leveler {
     double experience = amount * getMultiplier();
 
     playerData.addSkillExperience(skill, experience);
-    playerData.trySkillLevelup(skill);
+    boolean hasLevelUp = playerData.trySkillLevelup(skill);
+
+    if (
+      hasLevelUp &&
+      this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLED) &&
+      this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLE_SKILL_LEVELUP)
+    ) {
+      ExtraSkills.getAdventure().player(player).sendTitlePart(
+        TitlePart.TITLE,
+        playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_TITLE)
+      );
+
+      ExtraSkills.getAdventure().player(player).sendTitlePart(
+        TitlePart.SUBTITLE,
+        playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_DESCRIPTION)
+      );
+    }
 
     if (
       this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&
@@ -66,17 +83,16 @@ public final class Leveler {
       this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLE_SKILL_EXPERIENCE)
     ) {
       float progression = (float) (playerData.getSkillExperience(skill) / playerData.getSkillExperienceRequired(skill));
-      BossBar.Color bossBarColor = BossBar.Color.valueOf(Option.BOSS_BAR_COLOR.name());
-      BossBar.Overlay bossBarOverlay = BossBar.Overlay.valueOf(Option.BOSS_BAR_TYPE.name());
-
-      ExtraSkills.getAdventure().player(player).showBossBar(
-        BossBar.bossBar(
-          playerData.getBossBarSkillExperienceMessage(skill, experience),
-          progression,
-          bossBarColor,
-          bossBarOverlay
-        )
+      BossBar.Color bossBarColor = BossBar.Color.valueOf(this.instance.getOptionManager().getString(Option.BOSS_BAR_COLOR));
+      BossBar.Overlay bossBarOverlay = BossBar.Overlay.valueOf(this.instance.getOptionManager().getString(Option.BOSS_BAR_TYPE));
+      BossBar bossBar = BossBar.bossBar(
+        playerData.getBossBarSkillExperienceMessage(skill, experience),
+        progression,
+        bossBarColor,
+        bossBarOverlay
       );
+
+      this.instance.getBossBarManager().sendBossBar(player, bossBar);
     }
   }
 }

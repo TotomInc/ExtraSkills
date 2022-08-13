@@ -3,6 +3,7 @@ package io.totominc.ExtraSkills;
 import io.totominc.ExtraSkills.abilities.AbilityManager;
 import io.totominc.ExtraSkills.commands.ReloadCommand;
 import io.totominc.ExtraSkills.configuration.OptionManager;
+import io.totominc.ExtraSkills.data.BossBarManager;
 import io.totominc.ExtraSkills.data.PlayerDataManager;
 import io.totominc.ExtraSkills.leveler.Leveler;
 import io.totominc.ExtraSkills.listeners.BlockListeners;
@@ -20,6 +21,7 @@ public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
   private OptionManager optionManager;
+  private BossBarManager bossBarManager;
   private PlayerDataManager playerDataManager;
   private SkillManager skillManager;
   private AbilityManager abilityManager;
@@ -34,6 +36,7 @@ public class ExtraSkills extends JavaPlugin {
 
     // OptionManager should be first, as others classes may depend on some options loaded.
     this.optionManager = new OptionManager();
+    this.bossBarManager = new BossBarManager();
     this.playerDataManager = new PlayerDataManager();
     this.skillManager = new SkillManager();
     this.abilityManager = new AbilityManager();
@@ -67,6 +70,10 @@ public class ExtraSkills extends JavaPlugin {
 
   public OptionManager getOptionManager() {
     return this.optionManager;
+  }
+
+  public BossBarManager getBossBarManager() {
+    return this.bossBarManager;
   }
 
   public PlayerDataManager getPlayerDataManager() {

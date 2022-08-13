@@ -20,5 +20,6 @@ public final class PlayerJoinQuitListeners implements Listener {
   @EventHandler(priority = EventPriority.LOWEST)
   public void onPlayerQuitEvent(PlayerQuitEvent event) {
     ExtraSkills.getInstance().getPlayerDataManager().removePlayerData(event.getPlayer().getUniqueId());
+    ExtraSkills.getInstance().getBossBarManager().removePlayer(event.getPlayer());
   }
 }

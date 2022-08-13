@@ -30,17 +30,25 @@ boss_bar:
   type: PROGRESS
   # Color of the boss-bar, can be: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
   color: PURPLE
+  # Time in seconds before the boss-bar disappear.
+  display_time: 2
   # If true, a boss-bar is displayed for the "skill experience gained" event.
   enable_for_skill_experience_gained: true
   # Boss-bar message format for the "skill experience gained" event.
   # Please check documentation for possible placeholder values.
-  skill_experience_gained_format: "<#ffbe76>{skill} <#f0932b>{experience_2f}/{experience_required} <f6e58d>(lvl. {level})"
+  skill_experience_gained_format: "<#f0932b>{skill} <#ffbe76>{experience_2f}/{experience_required} <#ffbe76>(lvl. {level})"
 
 title:
+  # If true, titles are globally enabled.
   enabled: true
+  # If true, send a title for the "skill level-up" event.
   enable_for_skill_level_up: true
+  # Title for the "skill level-up" event.
+  # Please check documentation for possible placeholder values.
   skill_level_up_title: "<bold><#f0932b>Level-up!"
-  skill_level_up_description: "<bold><#f6e58d>{skill_capitalize} <#ffbe76>skill is now level <#f0932b>{level}<#ffbe76>!"
+  # Description for the "skill level-up" event.
+  # Please check documentation for possible placeholder values.
+  skill_level_up_description: "<bold><#f6e58d>{skill} <#ffbe76>skill is now level <#f0932b>{level}<#ffbe76>!"
 
 # List of game-modes where the plugin should not be enabled. Skill and abilities won't work
 # while the player is in one of these game-modes.

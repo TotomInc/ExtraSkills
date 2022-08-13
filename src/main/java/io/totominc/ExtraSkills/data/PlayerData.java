@@ -63,21 +63,27 @@ public final class PlayerData {
   }
 
   // TODO: implement skill max-level.
-  public void trySkillLevelup(Skill skill) {
+  public boolean trySkillLevelup(Skill skill) {
     PlayerSkillData skillData = playerSkillDataMap.get(skill);
 
     if (skillData == null) {
       System.out.println("PlayerData.trySkillLevelup: no skill found \"" + skill.toString() + "\"");
-      return;
+      return false;
     }
 
+    boolean hasLevelUp = false;
+
     while (skillData.getExperience() >= skillData.getExperienceRequired()) {
+      hasLevelUp = true;
+
       skillData.removeExperience(skillData.getExperienceRequired());
       skillData.addLevels(1);
       skillData.setExperienceRequired(
         this.calculateSkillExperienceRequired(skill, skillData.getLevel())
       );
     }
+
+    return hasLevelUp;
   }
 
   public double getSkillLevel(Skill skill) {
@@ -125,11 +131,34 @@ public final class PlayerData {
     return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
   }
 
+  public Component getTitleSkillLevelUpMessage(Skill skill, Option option) {
+    String template = ExtraSkills.getInstance().getOptionManager().getString(option);
+
+    return MiniMessage.miniMessage().deserialize(this.parseSkillLevelUpMessage(skill, template));
+  }
+
   private String parseSkillExperienceMessage(Skill skill, String message, double reward) {
     Map<String, String> values = new HashMap<>();
     StringSubstitutor stringSubstitutor = new StringSubstitutor(values, "{", "}");
 
     values.put("reward", TextUtils.get2DecimalsString(reward));
+    values.put("skill", TextUtils.getCapitalizedString(skill.name()));
+    values.put("skill_capitalize", skill.name().toUpperCase());
+    values.put("skill_lowercase", skill.name().toLowerCase());
+    values.put("experience", TextUtils.getDoubleWithoutDecimals(this.getSkillExperience(skill)));
+    values.put("experience_2f", TextUtils.get2DecimalsString(this.getSkillExperience(skill)));
+    values.put("experience_required", TextUtils.getDoubleWithoutDecimals(this.getSkillExperienceRequired(skill)));
+    values.put("experience_required_2f", TextUtils.get2DecimalsString(this.getSkillExperienceRequired(skill)));
+    values.put("level", TextUtils.getDoubleWithoutDecimals(this.getSkillLevel(skill)));
+    values.put("player_name", this.player.getDisplayName());
+
+    return stringSubstitutor.replace(message);
+  }
+
+  private String parseSkillLevelUpMessage(Skill skill, String message) {
+    Map<String, String> values = new HashMap<>();
+    StringSubstitutor stringSubstitutor = new StringSubstitutor(values, "{", "}");
+
     values.put("skill", TextUtils.getCapitalizedString(skill.name()));
     values.put("skill_capitalize", skill.name().toUpperCase());
     values.put("skill_lowercase", skill.name().toLowerCase());
