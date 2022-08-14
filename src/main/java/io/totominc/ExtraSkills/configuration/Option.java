@@ -16,7 +16,9 @@ public enum Option {
   TITLE_SKILL_LEVELUP_DESCRIPTION("title.skill_level_up_description", OptionType.STRING),
   DISABLED_GAMEMODES("disabled_gamemodes", OptionType.LIST),
   DISABLED_WORLDS("disabled_worlds", OptionType.LIST),
-  CHECK_PLAYER_BLOCK_PLACED("check_player_block_placed", OptionType.BOOLEAN);
+  CHECK_PLAYER_BLOCK_PLACED("check_player_block_placed", OptionType.BOOLEAN),
+  USE_GLOBAL_EXPERIENCE_EXPRESSION("use_global_experience_expression", OptionType.BOOLEAN),
+  GLOBAL_EXPERIENCE_EXPRESSION("global_experience_expression", OptionType.STRING);
 
   private final String path;
   private final OptionType type;

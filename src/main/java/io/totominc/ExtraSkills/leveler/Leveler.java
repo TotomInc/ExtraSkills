@@ -17,12 +17,24 @@ public final class Leveler {
   }
 
   /**
-   * EvalEx expression representation from a string.
+   * EvalEx expression representation from a string. This will return the experience expression
+   * for this specific skill.
    *
+   * @return Expression.
    * @see <a href="https://github.com/uklimaschewski/EvalEx">EvalEx</a>
    */
   public Expression getExperienceExpression(Skill skill) {
-    return new Expression(ExtraSkills.getInstance().getSkillManager().getSkillOption(skill).experienceExpression());
+    return new Expression(this.instance.getSkillManager().getSkillOption(skill).experienceExpression());
+  }
+
+  /**
+   * EvalEx expression representation from a string. This will return the global experience expression.
+   *
+   * @return Expression.
+   * @see <a href="https://github.com/uklimaschewski/EvalEx">EvalEx</a>
+   */
+  public Expression getExperienceExpression() {
+    return new Expression(this.instance.getOptionManager().getString(Option.GLOBAL_EXPERIENCE_EXPRESSION));
   }
 
   // TODO: Implement experience multiplier per skill with permissions.
@@ -35,7 +47,7 @@ public final class Leveler {
    * action-bar to player with skill progression.
    */
   public void addExperience(Player player, Skill skill, double amount) {
-    PlayerData playerData = ExtraSkills.getInstance().getPlayerDataManager().getPlayerData(player.getUniqueId());
+    PlayerData playerData = this.instance.getPlayerDataManager().getPlayerData(player.getUniqueId());
 
     // Handle possible case if PlayerData is not set for current player.
     if (playerData == null) {
@@ -50,9 +62,12 @@ public final class Leveler {
 
     double experience = amount * getMultiplier();
 
+    // Add skill experience to the player's specified skill.
     playerData.addSkillExperience(skill, experience);
+    // Used to detect a level-up after experience has been gained.
     boolean hasLevelUp = playerData.trySkillLevelup(skill);
 
+    // If titles are enabled, send title on level-up.
     if (
       hasLevelUp &&
       this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLED) &&
@@ -69,6 +84,7 @@ public final class Leveler {
       );
     }
 
+    // If action-bars are enabled, send action-bar on experience gained.
     if (
       this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLE_SKILL_EXPERIENCE)
@@ -78,6 +94,7 @@ public final class Leveler {
       );
     }
 
+    // If boss-bars are enabled, send boss-bar on experience gained.
     if (
       this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLE_SKILL_EXPERIENCE)

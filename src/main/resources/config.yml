@@ -66,5 +66,12 @@ disabled_worlds:
 # won't give skill experience.
 check_player_block_placed: true
 
+# If true, use the "global_experience_expression" formula for all skills experience required.
+# If set to false, the "experience_expression" of each skill inside "skills.yml" will be used instead.
+# This allows you to define a unique experience required formula for each separate skill.
+use_global_experience_expression: true
+# Formula that will calculate experience required for all skills, if "use_global_experience_expression" is set to true.
+global_experience_expression: "IF(level == 1, 5, 100 * level * 1.33)"
+
 # Please, do not touch. Used for plugin configuration versioning.
 config_version: 1

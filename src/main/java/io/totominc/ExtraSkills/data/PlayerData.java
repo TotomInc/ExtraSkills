@@ -24,11 +24,6 @@ public final class PlayerData {
   public PlayerData(Player player) {
     this.player = player;
 
-    this.loadSkillDataMap();
-  }
-
-  // TODO: implement loading player skill-data save.
-  public void loadSkillDataMap() {
     for (Skill skill : Skill.values()) {
       this.playerSkillDataMap.put(skill, new PlayerSkillData(this.calculateSkillExperienceRequired(skill, 1)));
     }
@@ -197,10 +192,14 @@ public final class PlayerData {
   /**
    * Use string expression to calculate experience required for a specific skill.
    */
-  private double calculateSkillExperienceRequired(Skill skill, double level) {
+  private double calculateSkillExperienceRequired(Skill skill, double skillLevel) {
     Expression expression = ExtraSkills.getInstance().getLeveler().getExperienceExpression(skill);
 
-    expression.setVariable("level", BigDecimal.valueOf(level));
+    if (ExtraSkills.getInstance().getOptionManager().getBoolean(Option.USE_GLOBAL_EXPERIENCE_EXPRESSION)) {
+      expression = ExtraSkills.getInstance().getLeveler().getExperienceExpression();
+    }
+
+    expression.setVariable("level", BigDecimal.valueOf(skillLevel));
 
     return expression.eval().doubleValue();
   }
