@@ -21,10 +21,22 @@ public final class SkillManager {
     } catch (InvalidConfigurationException ignored) {}
   }
 
+  /**
+   * Get the associated SkillOption of a Skill. A Skill can only have 1 SkillOption.
+   *
+   * @param skill Skill.
+   * @return SkillOption of a Skill.
+   */
   public SkillOption getSkillOption(Skill skill) {
     return this.skillOptionMap.get(skill);
   }
 
+  /**
+   * Load `skills.yml` configuration file, which will parse eligible skills
+   * rewards into a SkillOption object.
+   *
+   * @throws InvalidConfigurationException When the configuration is invalid.
+   */
   private void loadOptionsFromConfig() throws InvalidConfigurationException {
     ExtraSkills plugin = ExtraSkills.getInstance();
     File file = new File(plugin.getDataFolder(), "skills.yml");
@@ -37,6 +49,7 @@ public final class SkillManager {
     FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
     ConfigurationSection skillsSection = fileConfig.getConfigurationSection("skills");
 
+    // Handle invalid configuration when `skills` property is missing from the configuration file.
     if (skillsSection == null) {
       throw new InvalidConfigurationException("Missing \"skills\" section in \"skills.yml\" configuration file.");
     }
@@ -46,6 +59,7 @@ public final class SkillManager {
       String skillName = skill.name().toLowerCase();
       ConfigurationSection skillSection = skillsSection.getConfigurationSection(skillName);
 
+      // Handle invalid configuration when the `Skill.name()` property is missing from the configuration file.
       if (skillSection == null) {
         throw new InvalidConfigurationException("Missing \"" + skillName + "\" section in \"skills.yml\" configuration file.");
       }
@@ -57,23 +71,37 @@ public final class SkillManager {
       String experienceExpression = fileConfig.getString(skillPath + "." + SkillConfigProperty.EXPERIENCE_EXPRESSION.path);
       ConfigurationSection sources = fileConfig.getConfigurationSection(skillPath + "." + SkillConfigProperty.SOURCES.path);
 
+      // Handle invalid configuration when the `sources` property is missing from the configuration file.
       if (sources == null) {
         throw new InvalidConfigurationException("Missing \"sources\" section in \"skills.yml\" configuration file.");
       }
 
+      // Load all sources values that should be in the format `key:experience_amount`.
+      Map<String, Object> sourceValues = sources.getValues(false);
+
+      // Create a new SkillOption for this skill that contains eligible rewards/entities/actions
+      // with the amount of experience that should be awarded.
       this.skillOptionMap.put(
         Skill.valueOf(skill.name()),
         new SkillOption(
           isEnabled,
           maxLevel,
           experienceExpression,
-          this.loadSkillBlocksSource(skill, sources.getValues(false)),
-          this.loadSkillEntitiesSource(skill, sources.getValues(false))
+          this.loadSkillBlocksSource(skill, sourceValues),
+          this.loadSkillEntitiesSource(skill, sourceValues),
+          this.loadSkillEnchanterOptionsSource(skill, sourceValues)
         )
       );
     }
   }
 
+  /**
+   * Load Materials that should reward experience from the configuration file.
+   *
+   * @param skill Skill.
+   * @param blocks `key:value` map.
+   * @return HashMap containing `Material:ExperienceAmount`
+   */
   private HashMap<Material, Double> loadSkillBlocksSource(Skill skill, Map<String, Object> blocks) {
     HashMap<Material, Double> blocksMap = new HashMap<>();
 
@@ -89,6 +117,13 @@ public final class SkillManager {
     return blocksMap;
   }
 
+  /**
+   * Load Entities that should reward experience from the configuration file.
+   *
+   * @param skill Skill.
+   * @param entities `key:value` map.
+   * @return HashMap containing `Entity:ExperienceAmount`.
+   */
   private HashMap<EntityType, Double> loadSkillEntitiesSource(Skill skill, Map<String, Object> entities) {
     HashMap<EntityType, Double> entitiesMap = new HashMap<>();
 
@@ -102,5 +137,28 @@ public final class SkillManager {
     }
 
     return entitiesMap;
+  }
+
+  /**
+   * Load Materials that should reward experience for an item-related action, from the configuration file.
+   * For example, this is used for the Enchanter skill.
+   *
+   * @param skill Skill.
+   * @param materials `key:value` map.
+   * @return HashMap containing `Material:ExperienceAmount`.
+   */
+  private HashMap<Material, Double> loadSkillEnchanterOptionsSource(Skill skill, Map<String, Object> materials) {
+    HashMap<Material, Double> materialsMap = new HashMap<>();
+
+    if (skill.getSourceType().equals(SkillSourceType.ITEM) && materials.size() > 0) {
+      for (String material : materials.keySet()) {
+        materialsMap.put(
+          Material.valueOf(material.toUpperCase()),
+          Double.valueOf(materials.get(material).toString())
+        );
+      }
+    }
+
+    return materialsMap;
   }
 }

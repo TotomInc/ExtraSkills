@@ -1,6 +1,94 @@
 # Skills configuration.
 
 skills:
+  combat:
+    enabled: true
+    max_level: 100
+    experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
+    sources:
+      SKELETON: 2
+      ZOMBIE: 2
+      ZOMBIE_VILLAGER: 5
+      PILLAGER: 2
+      RAVAGER: 2
+      SPIDER: 1.5
+      CAVE_SPIDER: 2
+      WITCH: 4
+      CREEPER: 3
+      PHANTOM: 3
+      SLIME: 1
+      MAGMA_CUBE: 1
+      GHAST: 5
+      BLAZE: 3
+      HOGLIN: 10
+      PIGLIN: 2
+      PIGLIN_BRUTE: 2
+      ENDERMAN: 5
+      ENDER_DRAGON: 500
+      WITHER: 250
+      ELDER_GUARDIAN: 10
+      WITHER_SKELETON: 5
+      EVOKER: 7.5
+      VEX: 7.5
+      VINDICATOR: 5
+      ILLUSIONER: 5
+  enchanter:
+    enabled: true
+    max_level: 100
+    experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
+    sources:
+      BOOK: 3
+      WOODEN_SWORD: 1
+      WOODEN_SHOVEL: 1
+      WOODEN_PICKAXE: 1
+      WOODEN_AXE: 1
+      WOODEN_HOE: 1
+      STONE_SWORD: 3
+      STONE_SHOVEL: 3
+      STONE_PICKAXE: 3
+      STONE_AXE: 3
+      STONE_HOE: 3
+      IRON_SWORD: 4
+      IRON_SHOVEL: 4
+      IRON_PICKAXE: 4
+      IRON_AXE: 4
+      IRON_HOE: 4
+      GOLDEN_SWORD: 4
+      GOLDEN_SHOVEL: 4
+      GOLDEN_PICKAXE: 4
+      GOLDEN_AXE: 4
+      GOLDEN_HOE: 4
+      DIAMOND_SWORD: 8
+      DIAMOND_SHOVEL: 8
+      DIAMOND_PICKAXE: 8
+      DIAMOND_AXE: 8
+      DIAMOND_HOE: 8
+      NETHERITE_SWORD: 16
+      NETHERITE_SHOVEL: 16
+      NETHERITE_PICKAXE: 16
+      NETHERITE_AXE: 16
+      NETHERITE_HOE: 16
+      LEATHER_HELMET: 1
+      LEATHER_CHESTPLATE: 1
+      LEATHER_LEGGINGS: 1
+      LEATHER_BOOTS: 1
+      IRON_HELMET: 4
+      IRON_CHESTPLATE: 4
+      IRON_LEGGINGS: 4
+      IRON_BOOTS: 4
+      GOLDEN_HELMET: 4
+      GOLDEN_CHESTPLATE: 4
+      GOLDEN_LEGGINGS: 4
+      GOLDEN_BOOTS: 4
+      DIAMOND_HELMET: 8
+      DIAMOND_CHESTPLATE: 8
+      DIAMOND_LEGGINGS: 8
+      DIAMOND_BOOTS: 8
+      NETHERITE_HELMET: 16
+      NETHERITE_CHESTPLATE: 16
+      NETHERITE_LEGGINGS: 16
+      NETHERITE_BOOTS: 16
+      ELYTRA: 10
   mining:
     enabled: true
     max_level: 100
@@ -36,38 +124,6 @@ skills:
       NETHER_GOLD_ORE: 4
       NETHER_QUARTZ_ORE: 2
       ANCIENT_DEBRIS: 100
-  combat:
-    enabled: true
-    max_level: 100
-    experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
-    sources:
-      SKELETON: 2
-      ZOMBIE: 2
-      ZOMBIE_VILLAGER: 5
-      PILLAGER: 2
-      RAVAGER: 2
-      SPIDER: 1.5
-      CAVE_SPIDER: 2
-      WITCH: 4
-      CREEPER: 3
-      PHANTOM: 3
-      SLIME: 1
-      MAGMA_CUBE: 1
-      GHAST: 5
-      BLAZE: 3
-      HOGLIN: 10
-      PIGLIN: 2
-      PIGLIN_BRUTE: 2
-      ENDERMAN: 5
-      ENDER_DRAGON: 500
-      WITHER: 250
-      ELDER_GUARDIAN: 10
-      WITHER_SKELETON: 5
-      EVOKER: 7.5
-      VEX: 7.5
-      VINDICATOR: 5
-      ILLUSIONER: 5
-
 
 # Please, do not touch. Used for plugin configuration versioning.
 config_version: 1

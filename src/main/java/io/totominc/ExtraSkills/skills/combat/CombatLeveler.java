@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class CombatLeveler extends SkillLeveler implements Listener {
+public final class CombatLeveler extends SkillLeveler implements Listener {
   public CombatLeveler(ExtraSkills instance) {
     super(instance);
   }
