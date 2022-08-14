@@ -6,6 +6,8 @@ import io.totominc.ExtraSkills.configuration.Option;
 import io.totominc.ExtraSkills.data.PlayerData;
 import io.totominc.ExtraSkills.skills.Skill;
 import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.title.TitlePart;
 import org.bukkit.entity.Player;
 
@@ -66,6 +68,22 @@ public final class Leveler {
     playerData.addSkillExperience(skill, experience);
     // Used to detect a level-up after experience has been gained.
     boolean hasLevelUp = playerData.trySkillLevelup(skill);
+
+    // If sounds are enabled, send sound on level-up.
+    if (
+      hasLevelUp &&
+      this.instance.getOptionManager().getBoolean(Option.SOUND_ENABLED) &&
+      this.instance.getOptionManager().getBoolean(Option.SOUND_ENABLE_SKILL_LEVELUP)
+    ) {
+      @SuppressWarnings("PatternValidation") Sound sound = Sound.sound(
+        Key.key(this.instance.getOptionManager().getString(Option.SOUND_SKILL_LEVELUP_SOUND)),
+        Sound.Source.valueOf(this.instance.getOptionManager().getString(Option.SOUND_SKILL_LEVELUP_SOURCE)),
+        (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_VOLUME),
+        (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_PITCH)
+      );
+
+      ExtraSkills.getAdventure().player(player).playSound(sound);
+    }
 
     // If titles are enabled, send title on level-up.
     if (

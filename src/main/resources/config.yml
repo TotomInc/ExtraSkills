@@ -50,6 +50,22 @@ title:
   # Please check documentation for possible placeholder values.
   skill_level_up_description: "<bold><#f6e58d>{skill} <#ffbe76>skill is now level <#f0932b>{level}<#ffbe76>!"
 
+sound:
+  # If true, sounds are globally enabled.
+  enabled: true
+  # If true, send a sound for the "skill level-up" event.
+  enabled_for_skill_level_up: true
+  # ID of the sound, a list of possible values can be found here: https://www.digminecraft.com/lists/sound_list_pc.php
+  skill_level_up_sound: entity.player.levelup
+  # Category sound chanel option to play the sound to.
+  # It's recommended to not change this setting and to leave it to MASTER.
+  # Possible values are: MASTER, MUSIC, RECORD, WEATHER, BLOCK, HOSTILE, NEUTRAL, PLAYER, AMBIENT, VOICE.
+  skill_level_up_sound_source: MASTER
+  # Pitch of the sound, should be a decimal value between 0 and 2.
+  skill_level_up_pitch: 0
+  # Volume of the sound, should be a decimal value between 0 and 1.
+  skill_level_up_volume: 1
+
 # List of game-modes where the plugin should not be enabled. Skill and abilities won't work
 # while the player is in one of these game-modes.
 disabled_gamemodes:
@@ -71,7 +87,7 @@ check_player_block_placed: true
 # This allows you to define a unique experience required formula for each separate skill.
 use_global_experience_expression: true
 # Formula that will calculate experience required for all skills, if "use_global_experience_expression" is set to true.
-global_experience_expression: "IF(level == 1, 5, 100 * level * 1.33)"
+global_experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
 
 # Please, do not touch. Used for plugin configuration versioning.
 config_version: 1
