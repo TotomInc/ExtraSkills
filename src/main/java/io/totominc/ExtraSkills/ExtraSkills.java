@@ -15,16 +15,21 @@ import io.totominc.extraskills.skills.combat.CombatLeveler;
 import io.totominc.extraskills.skills.enchanter.EnchanterLeveler;
 import io.totominc.extraskills.skills.mining.MiningLeveler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
   private static BukkitAudiences adventure;
+  private static Economy vaultEconomy;
+  private static boolean vaultEnabled;
+
   private OptionManager optionManager;
   private BossBarManager bossBarManager;
   private PlayerStorageManager playerStorageManager;
@@ -39,6 +44,8 @@ public class ExtraSkills extends JavaPlugin {
 
     instance = this;
     adventure = BukkitAudiences.create(this);
+
+    vaultEnabled = this.setupEconomy();
 
     // OptionManager should be first, as others classes may depend on some options loaded.
     this.optionManager = new OptionManager();
@@ -79,6 +86,14 @@ public class ExtraSkills extends JavaPlugin {
     return adventure;
   }
 
+  public static Economy getVaultEconomy() {
+    return vaultEconomy;
+  }
+
+  public static boolean getIsVaultEnabled() {
+    return vaultEnabled;
+  }
+
   public OptionManager getOptionManager() {
     return this.optionManager;
   }
@@ -105,6 +120,22 @@ public class ExtraSkills extends JavaPlugin {
 
   public Leveler getLeveler() {
     return this.leveler;
+  }
+
+  private boolean setupEconomy() {
+    if (this.getServer().getPluginManager().getPlugin("Vault") == null) {
+      return false;
+    }
+
+    RegisteredServiceProvider<Economy> rsp = this.getServer().getServicesManager().getRegistration(Economy.class);
+
+    if (rsp == null) {
+      return false;
+    }
+
+    vaultEconomy = rsp.getProvider();
+
+    return true;
   }
 
   private void registerCommands() {

@@ -22,6 +22,8 @@ public enum Option {
   SOUND_SKILL_LEVELUP_VOLUME("sound.skill_level_up_volume", OptionType.DOUBLE),
   DISABLED_GAMEMODES("disabled_gamemodes", OptionType.LIST),
   DISABLED_WORLDS("disabled_worlds", OptionType.LIST),
+  ENABLE_GAIN_MONEY_SKILL_LEVELUP("enable_gain_money_on_skill_levelup", OptionType.BOOLEAN),
+  MONEY_SKILL_LEVELUP_EXPRESSION("money_skill_levelup_expression", OptionType.STRING),
   CHECK_PLAYER_BLOCK_PLACED("check_player_block_placed", OptionType.BOOLEAN),
   USE_GLOBAL_EXPERIENCE_EXPRESSION("use_global_experience_expression", OptionType.BOOLEAN),
   GLOBAL_EXPERIENCE_EXPRESSION("global_experience_expression", OptionType.STRING);

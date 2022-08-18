@@ -78,6 +78,11 @@ disabled_gamemodes:
 disabled_worlds:
   - example_world
 
+# If true, gain money on skill level-up. Requires Vault.
+enable_gain_money_on_skill_levelup: false
+# Formula that will be used to gain money on skill level-up, if "gain_money_on_skill_levelup" is set to true.
+money_skill_levelup_expression: "level * 50"
+
 # If true, plugin will check if a block has been placed by a player, which once mined
 # won't give skill experience.
 check_player_block_placed: true

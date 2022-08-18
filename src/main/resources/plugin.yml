@@ -4,7 +4,7 @@ description: Level-up skills such as mining or fishing to gain vanilla-friendly 
 
 version: 0.0.1
 api-version: 1.19
-softdepend: []
+softdepend: [Vault]
 
 author: TotomInc <cazade.thomas@gmail.com>
 website: https://totominc.io/

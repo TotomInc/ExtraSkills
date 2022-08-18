@@ -11,6 +11,8 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.title.TitlePart;
 import org.bukkit.entity.Player;
 
+import java.math.BigDecimal;
+
 public final class Leveler {
   private final ExtraSkills instance;
 
@@ -37,6 +39,17 @@ public final class Leveler {
    */
   public Expression getExperienceExpression() {
     return new Expression(this.instance.getOptionManager().getString(Option.GLOBAL_EXPERIENCE_EXPRESSION));
+  }
+
+  /**
+   * EvalEx expression representation from a string. This will return the money expression used to gain
+   * money on skill level-up.
+   *
+   * @return Expression.
+   * @see <a href="https://github.com/uklimaschewski/EvalEx">EvalEx</a>
+   */
+  public Expression getMoneyExpression() {
+    return new Expression(this.instance.getOptionManager().getString(Option.MONEY_SKILL_LEVELUP_EXPRESSION));
   }
 
   // TODO: Implement experience multiplier per skill with permissions.
@@ -66,12 +79,36 @@ public final class Leveler {
 
     // Add skill experience to the player's specified skill.
     playerData.addSkillExperience(skill, experience);
-    // Used to detect a level-up after experience has been gained.
-    boolean hasLevelUp = playerData.trySkillLevelup(skill);
+
+    // Keep in memory the current level of the player before doing level-up.
+    double levelBeforeLevelup = playerData.getSkillLevel(skill);
+    // Try to level-up and return the amount of levels gained during the process.
+    double levelsGained = playerData.trySkillLevelup(skill);
+
+    // If economy and money on skill level-up is enabled, use Vault to send money.
+    if (
+      levelsGained > 0 &&
+      ExtraSkills.getIsVaultEnabled() &&
+      ExtraSkills.getVaultEconomy() != null &&
+      this.instance.getOptionManager().getBoolean(Option.ENABLE_GAIN_MONEY_SKILL_LEVELUP)
+    ) {
+      double i = levelsGained;
+
+      while (i > 0) {
+        double level = levelBeforeLevelup + levelsGained - (i - 1);
+        Expression moneyExpression = this.getMoneyExpression();
+
+        moneyExpression.setVariable("level", BigDecimal.valueOf(level));
+
+        ExtraSkills.getVaultEconomy().depositPlayer(player, moneyExpression.eval().intValue());
+
+        i -= 1;
+      }
+    }
 
     // If sounds are enabled, send sound on level-up.
     if (
-      hasLevelUp &&
+      levelsGained > 0 &&
       this.instance.getOptionManager().getBoolean(Option.SOUND_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.SOUND_ENABLE_SKILL_LEVELUP)
     ) {
@@ -87,7 +124,7 @@ public final class Leveler {
 
     // If titles are enabled, send title on level-up.
     if (
-      hasLevelUp &&
+      levelsGained > 0 &&
       this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLE_SKILL_LEVELUP)
     ) {

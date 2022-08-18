@@ -58,18 +58,18 @@ public final class PlayerData {
   }
 
   // TODO: implement skill max-level.
-  public boolean trySkillLevelup(Skill skill) {
+  public double trySkillLevelup(Skill skill) {
     PlayerSkillData skillData = playerSkillDataMap.get(skill);
 
     if (skillData == null) {
       System.out.println("PlayerData.trySkillLevelup: no skill found \"" + skill.toString() + "\"");
-      return false;
+      return 0;
     }
 
-    boolean hasLevelUp = false;
+    double levelsGained = 0;
 
     while (skillData.getExperience() >= skillData.getExperienceRequired()) {
-      hasLevelUp = true;
+      levelsGained += 1;
 
       skillData.removeExperience(skillData.getExperienceRequired());
       skillData.addLevels(1);
@@ -78,7 +78,7 @@ public final class PlayerData {
       );
     }
 
-    return hasLevelUp;
+    return levelsGained;
   }
 
   public void setSkillLevel(Skill skill, double level) {
