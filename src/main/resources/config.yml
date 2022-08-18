@@ -84,6 +84,10 @@ abilities:
     potion_effect: FAST_DIGGING
     # Potion effect amplifier.
     amplifier: 2
+  # Customize configuration for the amount of experience dropped after the block has been mined.
+  farseeing:
+    # Multiplier applied to the default experience to drop.
+    experience_multiplier: 4
 
 # List of game-modes where the plugin should not be enabled. Skill and abilities won't work
 # while the player is in one of these game-modes.

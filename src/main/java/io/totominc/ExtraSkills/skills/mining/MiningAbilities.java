@@ -2,48 +2,34 @@ package io.totominc.extraskills.skills.mining;
 
 import io.totominc.extraskills.ExtraSkills;
 import io.totominc.extraskills.abilities.Ability;
-import io.totominc.extraskills.abilities.AbilityOption;
 import io.totominc.extraskills.configuration.Option;
-import io.totominc.extraskills.data.PlayerData;
 import io.totominc.extraskills.skills.Skill;
+import io.totominc.extraskills.skills.SkillAbility;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collection;
-import java.util.Random;
 
-public final class MiningAbilities {
-  private final ExtraSkills instance;
-  private final Random random = new Random();
-
+public final class MiningAbilities extends SkillAbility {
   public MiningAbilities(ExtraSkills instance) {
-    this.instance = instance;
+    super(instance, Skill.MINING);
   }
 
+  /**
+   * Drop twice as many resources.
+   *
+   * @param player Player.
+   * @param block Block.
+   */
   public void luckyMiner(Player player, Block block) {
-    PlayerData playerData = ExtraSkills.getInstance().getPlayerDataManager().getPlayerData(player.getUniqueId());
-
-    if (playerData == null) {
-      return;
-    }
-
-    AbilityOption abilityOption = playerData.getAbilityOption(Ability.LUCKY_MINER);
-
-    if (
-      abilityOption == null ||
-      !abilityOption.isEnabled() ||
-      !abilityOption.blocks().contains(block.getType()) ||
-      playerData.getSkillLevel(Skill.MINING) < abilityOption.unlockLevel()
-    ) {
-      return;
-    }
-
-    if (this.random.nextDouble() > playerData.getAbilityValue(Ability.LUCKY_MINER) / 100) {
+    if (!this.canUseAbility(player, block, Ability.LUCKY_MINER)) {
       return;
     }
 
@@ -59,25 +45,14 @@ public final class MiningAbilities {
     }
   }
 
+  /**
+   * Apply a potion effect.
+   *
+   * @param player Player.
+   * @param block Block.
+   */
   public void haster(Player player, Block block) {
-    PlayerData playerData = ExtraSkills.getInstance().getPlayerDataManager().getPlayerData(player.getUniqueId());
-
-    if (playerData == null) {
-      return;
-    }
-
-    AbilityOption abilityOption = playerData.getAbilityOption(Ability.HASTER);
-
-    if (
-      abilityOption == null ||
-      !abilityOption.isEnabled() ||
-      !abilityOption.blocks().contains(block.getType()) ||
-      playerData.getSkillLevel(Skill.MINING) < abilityOption.unlockLevel()
-    ) {
-      return;
-    }
-
-    if (this.random.nextDouble() > playerData.getAbilityValue(Ability.HASTER) / 100) {
+    if (!this.canUseAbility(player, block, Ability.HASTER)) {
       return;
     }
 
@@ -97,5 +72,22 @@ public final class MiningAbilities {
       this.instance.getOptionManager().getInt(Option.ABILITY_HASTER_DURATION),
       this.instance.getOptionManager().getInt(Option.ABILITY_HASTER_AMPLIFIER)
     ).apply(player);
+  }
+
+  /**
+   * Drop more block experience.
+   *
+   * @param player Player.
+   * @param block Block.
+   * @param expToDrop Experience to drop.
+   */
+  public void farseeing(Player player, Block block, int expToDrop) {
+    if (!this.canUseAbility(player, block, Ability.FARSEEING)) {
+      return;
+    }
+
+    ExperienceOrb experienceOrb = (ExperienceOrb) block.getWorld().spawnEntity(block.getLocation(), EntityType.EXPERIENCE_ORB);
+
+    experienceOrb.setExperience(expToDrop * this.instance.getOptionManager().getInt(Option.ABILITY_FARSEEING_MULTIPLIER));
   }
 }

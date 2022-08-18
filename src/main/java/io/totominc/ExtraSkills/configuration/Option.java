@@ -27,6 +27,7 @@ public enum Option {
   ABILITY_HASTER_DURATION("abilities.haster.duration_in_ticks", OptionType.INT),
   ABILITY_HASTER_POTION_EFFECT("abilities.haster.potion_effect", OptionType.STRING),
   ABILITY_HASTER_AMPLIFIER("abilities.haster.amplifier", OptionType.INT),
+  ABILITY_FARSEEING_MULTIPLIER("abilities.farseeing.experience_multiplier", OptionType.INT),
   DISABLED_GAMEMODES("disabled_gamemodes", OptionType.LIST),
   DISABLED_WORLDS("disabled_worlds", OptionType.LIST),
   ENABLE_GAIN_MONEY_SKILL_LEVELUP("enable_gain_money_on_skill_levelup", OptionType.BOOLEAN),

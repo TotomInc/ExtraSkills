@@ -24,7 +24,9 @@ abilities:
   mining:
     lucky_miner:
       enabled: true
+      # 2.0 = 2% base chance to trigger ability.
       base_value: 2.0
+      # 2.0 = base_value + (2% * (skill_level / level_up_rate))
       value_gained_per_level: 2.0
       unlock_level: 5
       level_up_rate: 5
@@ -57,6 +59,32 @@ abilities:
       max_level: 10
       blocks:
         - STONE
+        - COAL_ORE
+        - DEEPSLATE_COAL_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - GOLD_ORE
+        - DEEPSLATE_GOLD_ORE
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - NETHER_GOLD_ORE
+        - NETHER_QUARTZ_ORE
+    farseeing:
+      enabled: true
+      base_value: 4.0
+      value_gained_per_level: 4.0
+      unlock_level: 5
+      level_up_rate: 2
+      max_level: 25
+      blocks:
         - COAL_ORE
         - DEEPSLATE_COAL_ORE
         - IRON_ORE

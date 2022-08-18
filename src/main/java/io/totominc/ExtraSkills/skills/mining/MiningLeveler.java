@@ -36,6 +36,7 @@ public final class MiningLeveler extends SkillLeveler implements Listener {
     // Apply abilities from here.
     this.miningAbilities.luckyMiner(event.getPlayer(), event.getBlock());
     this.miningAbilities.haster(event.getPlayer(), event.getBlock());
+    this.miningAbilities.farseeing(event.getPlayer(), event.getBlock(), event.getExpToDrop());
 
     // Add experience to player.
     this.gainExperience(Skill.MINING, event.getPlayer(), event.getBlock());

@@ -9,7 +9,7 @@ import java.util.List;
 public enum Skill {
   COMBAT(List.of(), SkillSourceType.ENTITY),
   ENCHANTER(List.of(), SkillSourceType.ITEM),
-  MINING(Arrays.asList(Ability.LUCKY_MINER, Ability.HASTER), SkillSourceType.BLOCK);
+  MINING(Arrays.asList(Ability.LUCKY_MINER, Ability.HASTER, Ability.FARSEEING), SkillSourceType.BLOCK);
 
   private final List<Ability> abilities;
   private final SkillSourceType sourceType;
