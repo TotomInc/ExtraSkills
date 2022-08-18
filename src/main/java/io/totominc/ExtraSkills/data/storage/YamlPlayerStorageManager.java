@@ -55,7 +55,7 @@ public final class YamlPlayerStorageManager extends PlayerStorageManager {
     } catch (Exception err) {
       // In case of loading error, start a "guest" session: empty PlayerData, no save allowed.
       this.saveDisabled.add(uuid);
-      this.instance.getPlayerDataManager().addPlayerData(uuid, new PlayerData(player));
+      this.instance.getPlayerDataManager().addPlayerData(uuid, new PlayerData(this.instance, player));
 
       Bukkit.getLogger().warning("Unable to load player save " + player.getDisplayName() + "(UUID: " + uuid + "). Please, send the error below to the developer for a fix, thanks!");
       err.printStackTrace();

@@ -12,7 +12,7 @@ public abstract class PlayerStorageManager {
   }
 
   public PlayerData createPlayerData(Player player) {
-    PlayerData playerData = new PlayerData(player);
+    PlayerData playerData = new PlayerData(this.instance, player);
 
     ExtraSkills.getInstance().getPlayerDataManager().addPlayerData(player.getUniqueId(), playerData);
 

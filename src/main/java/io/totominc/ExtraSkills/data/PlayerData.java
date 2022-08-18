@@ -18,10 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PlayerData {
+  private final ExtraSkills instance;
   private final Player player;
   private final Map<Skill, PlayerSkillData> playerSkillDataMap = new HashMap<>();
 
-  public PlayerData(Player player) {
+  public PlayerData(ExtraSkills instance, Player player) {
+    this.instance = instance;
     this.player = player;
 
     for (Skill skill : Skill.values()) {
@@ -54,10 +56,18 @@ public final class PlayerData {
       return;
     }
 
+    // Max-level for this skill. If its value is set to 0, it's an infinite value.
+    double maxLevel = this.instance.getSkillManager().getSkillOption(skill).maxLevel();
+
+    // Don't add experience if player is at max-level.
+    if (maxLevel > 0 && skillData.getLevel() >= maxLevel) {
+      System.out.println("PlayerData.addSkillExperience: skill \"" + skill.toString() + "\" at max level, not adding experience");
+      return;
+    }
+
     skillData.addExperience(amount);
   }
 
-  // TODO: implement skill max-level.
   public double trySkillLevelup(Skill skill) {
     PlayerSkillData skillData = playerSkillDataMap.get(skill);
 
@@ -66,8 +76,18 @@ public final class PlayerData {
       return 0;
     }
 
+    // Max-level for this skill. If its value is set to 0, it's an infinite value.
+    double maxLevel = this.instance.getSkillManager().getSkillOption(skill).maxLevel();
+
+    // Don't try to level-up if the player is already at the max-level.
+    if (maxLevel > 0 && skillData.getLevel() >= maxLevel) {
+      System.out.println("PlayerData.trySkillLevelup: player already at max skill \"" + skill.toString() + "\" level");
+      return 0;
+    }
+
     double levelsGained = 0;
 
+    // Level-up as much as possible.
     while (skillData.getExperience() >= skillData.getExperienceRequired()) {
       levelsGained += 1;
 
@@ -76,6 +96,11 @@ public final class PlayerData {
       skillData.setExperienceRequired(
         this.calculateSkillExperienceRequired(skill, skillData.getLevel())
       );
+    }
+
+    // After a level-up on the max-level, make sure to reset experience.
+    if (maxLevel > 0 && skillData.getLevel() == maxLevel) {
+      skillData.setExperience(0);
     }
 
     return levelsGained;
