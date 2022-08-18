@@ -8,6 +8,8 @@ action_bar:
   enabled: true
   # If true, action-bar is enabled for the "skill experience gained" event.
   enable_for_skill_experience_gained: true
+  # If true, action-bar is not sent when player reaches the max skill level.
+  disable_on_max_level: true
   # Action-bar message format for the "skill experience gained" event.
   #
   # Valid placeholder values are:
@@ -22,10 +24,14 @@ action_bar:
   #   {level}: current player skill level.
   #   {player_name}: name of the player.
   skill_experience_gained_format: "<#f0932b>+{reward} <#ffbe76>{skill_lowercase} experience <#f6e58d>({experience_2f}/{experience_required})"
+  # Action-bar message format when a player has reached the max skill level.
+  skill_max_level_format: "<#ffbe76>{skill} <#f6e58d>skill maxed"
 
 boss_bar:
   # If true, boss-bar is globally enabled.
   enabled: true
+  # If true, boss-bar is not sent when player reaches the max skill level.
+  disable_on_max_level: false
   # Type of the boss-bar, can be: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20.
   type: PROGRESS
   # Color of the boss-bar, can be: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
@@ -37,6 +43,8 @@ boss_bar:
   # Boss-bar message format for the "skill experience gained" event.
   # Please check documentation for possible placeholder values.
   skill_experience_gained_format: "<#f0932b>{skill} <#ffbe76>{experience_2f}/{experience_required} <#ffbe76>(lvl. {level})"
+  # Boss-bar message format when a player has reached the max skill level.
+  skill_max_level_format: "<#f0932b>{skill} <#ffbe76>skill maxed <#ffbe76>(lvl. {level})"
 
 title:
   # If true, titles are globally enabled.

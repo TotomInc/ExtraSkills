@@ -75,6 +75,7 @@ public final class Leveler {
       return;
     }
 
+    boolean isMaxLevel = playerData.getSkillLevel(skill) >= this.instance.getSkillManager().getSkillOption(skill).maxLevel();
     double experience = amount * getMultiplier();
 
     // Add skill experience to the player's specified skill.
@@ -112,14 +113,7 @@ public final class Leveler {
       this.instance.getOptionManager().getBoolean(Option.SOUND_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.SOUND_ENABLE_SKILL_LEVELUP)
     ) {
-      @SuppressWarnings("PatternValidation") Sound sound = Sound.sound(
-        Key.key(this.instance.getOptionManager().getString(Option.SOUND_SKILL_LEVELUP_SOUND)),
-        Sound.Source.valueOf(this.instance.getOptionManager().getString(Option.SOUND_SKILL_LEVELUP_SOURCE)),
-        (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_VOLUME),
-        (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_PITCH)
-      );
-
-      ExtraSkills.getAdventure().player(player).playSound(sound);
+      this.sendSound(player);
     }
 
     // If titles are enabled, send title on level-up.
@@ -128,15 +122,7 @@ public final class Leveler {
       this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.TITLE_ENABLE_SKILL_LEVELUP)
     ) {
-      ExtraSkills.getAdventure().player(player).sendTitlePart(
-        TitlePart.TITLE,
-        playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_TITLE)
-      );
-
-      ExtraSkills.getAdventure().player(player).sendTitlePart(
-        TitlePart.SUBTITLE,
-        playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_DESCRIPTION)
-      );
+      this.sendTitles(skill, player, playerData);
     }
 
     // If action-bars are enabled, send action-bar on experience gained.
@@ -144,9 +130,7 @@ public final class Leveler {
       this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_ENABLE_SKILL_EXPERIENCE)
     ) {
-      ExtraSkills.getAdventure().player(player).sendActionBar(
-        playerData.getActionBarSkillExperienceMessage(skill, experience)
-      );
+      this.sendActionBar(skill, player, playerData, experience, isMaxLevel);
     }
 
     // If boss-bars are enabled, send boss-bar on experience gained.
@@ -154,12 +138,67 @@ public final class Leveler {
       this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLED) &&
       this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_ENABLE_SKILL_EXPERIENCE)
     ) {
+      this.sendBossBar(skill, player, playerData, experience, isMaxLevel);
+    }
+  }
+
+  private void sendSound(Player player) {
+    @SuppressWarnings("PatternValidation") Sound sound = Sound.sound(
+      Key.key(this.instance.getOptionManager().getString(Option.SOUND_SKILL_LEVELUP_SOUND)),
+      Sound.Source.valueOf(this.instance.getOptionManager().getString(Option.SOUND_SKILL_LEVELUP_SOURCE)),
+      (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_VOLUME),
+      (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_PITCH)
+    );
+
+    ExtraSkills.getAdventure().player(player).playSound(sound);
+  }
+
+  private void sendTitles(Skill skill, Player player, PlayerData playerData) {
+    ExtraSkills.getAdventure().player(player).sendTitlePart(
+      TitlePart.TITLE,
+      playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_TITLE)
+    );
+
+    ExtraSkills.getAdventure().player(player).sendTitlePart(
+      TitlePart.SUBTITLE,
+      playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_DESCRIPTION)
+    );
+  }
+
+  private void sendActionBar(Skill skill, Player player, PlayerData playerData, double experience, boolean isMaxLevel) {
+    if (!isMaxLevel) {
+      ExtraSkills.getAdventure().player(player).sendActionBar(
+        playerData.getActionBarSkillExperienceMessage(skill, experience)
+      );
+    }
+
+    if (isMaxLevel && !this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_DISABLE_MAX_LEVEL)) {
+      ExtraSkills.getAdventure().player(player).sendActionBar(
+        playerData.getActionBarMaxSkillLevelMessage(skill, experience)
+      );
+    }
+  }
+
+  private void sendBossBar(Skill skill, Player player, PlayerData playerData, double experience, boolean isMaxLevel) {
+    BossBar.Color bossBarColor = BossBar.Color.valueOf(this.instance.getOptionManager().getString(Option.BOSS_BAR_COLOR));
+    BossBar.Overlay bossBarOverlay = BossBar.Overlay.valueOf(this.instance.getOptionManager().getString(Option.BOSS_BAR_TYPE));
+
+    if (!isMaxLevel) {
       float progression = (float) (playerData.getSkillExperience(skill) / playerData.getSkillExperienceRequired(skill));
-      BossBar.Color bossBarColor = BossBar.Color.valueOf(this.instance.getOptionManager().getString(Option.BOSS_BAR_COLOR));
-      BossBar.Overlay bossBarOverlay = BossBar.Overlay.valueOf(this.instance.getOptionManager().getString(Option.BOSS_BAR_TYPE));
       BossBar bossBar = BossBar.bossBar(
         playerData.getBossBarSkillExperienceMessage(skill, experience),
         progression,
+        bossBarColor,
+        bossBarOverlay
+      );
+
+      this.instance.getBossBarManager().sendBossBar(player, bossBar);
+    }
+
+    if (isMaxLevel && !this.instance.getOptionManager().getBoolean(Option.BOSS_BAR_DISABLE_MAX_LEVEL)) {
+      BossBar bossBar = BossBar.bossBar(
+        playerData.getBossBarMaxSkillLevelMessage(skill, experience),
+        1,
         bossBarColor,
         bossBarOverlay
       );

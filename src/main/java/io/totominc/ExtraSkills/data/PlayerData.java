@@ -167,8 +167,20 @@ public final class PlayerData {
     return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
   }
 
+  public Component getActionBarMaxSkillLevelMessage(Skill skill, double reward) {
+    String template = ExtraSkills.getInstance().getOptionManager().getString(Option.ACTION_BAR_SKILL_MAX_LEVEL_FORMAT);
+
+    return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
+  }
+
   public Component getBossBarSkillExperienceMessage(Skill skill, double reward) {
     String template = ExtraSkills.getInstance().getOptionManager().getString(Option.BOSS_BAR_SKILL_EXPERIENCE_FORMAT);
+
+    return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
+  }
+
+  public Component getBossBarMaxSkillLevelMessage(Skill skill, double reward) {
+    String template = ExtraSkills.getInstance().getOptionManager().getString(Option.BOSS_BAR_SKILL_MAX_LEVEL_FORMAT);
 
     return MiniMessage.miniMessage().deserialize(this.parseSkillExperienceMessage(skill, template, reward));
   }
