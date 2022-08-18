@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.configuration;
+package io.totominc.extraskills.configuration;
 
 import java.util.ArrayList;
 import java.util.List;

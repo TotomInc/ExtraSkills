@@ -1,5 +1,5 @@
 name: ExtraSkills
-main: io.totominc.ExtraSkills.ExtraSkills
+main: io.totominc.extraskills.ExtraSkills
 description: Level-up skills such as mining or fishing to gain vanilla-friendly passives.
 
 version: 0.0.1

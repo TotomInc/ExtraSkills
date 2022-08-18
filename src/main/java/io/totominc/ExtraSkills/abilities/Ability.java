@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.abilities;
+package io.totominc.extraskills.abilities;
 
-import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.extraskills.skills.Skill;
 
 public enum Ability {
   LUCKY_MINER(Skill.MINING, true, false);

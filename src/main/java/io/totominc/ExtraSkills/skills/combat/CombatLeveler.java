@@ -1,8 +1,8 @@
-package io.totominc.ExtraSkills.skills.combat;
+package io.totominc.extraskills.skills.combat;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.leveler.SkillLeveler;
-import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.leveler.SkillLeveler;
+import io.totominc.extraskills.skills.Skill;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

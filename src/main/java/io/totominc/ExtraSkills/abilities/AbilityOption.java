@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.abilities;
+package io.totominc.extraskills.abilities;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;

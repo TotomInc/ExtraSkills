@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.listeners;
+package io.totominc.extraskills.listeners;
 
-import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.extraskills.ExtraSkills;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

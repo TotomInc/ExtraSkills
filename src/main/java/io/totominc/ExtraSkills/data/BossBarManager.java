@@ -1,7 +1,7 @@
-package io.totominc.ExtraSkills.data;
+package io.totominc.extraskills.data;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.configuration.Option;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.configuration.Option;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.util.Ticks;
 import org.bukkit.entity.Player;

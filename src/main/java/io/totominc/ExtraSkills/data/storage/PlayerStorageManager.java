@@ -1,7 +1,7 @@
-package io.totominc.ExtraSkills.data.storage;
+package io.totominc.extraskills.data.storage;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.data.PlayerData;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.data.PlayerData;
 import org.bukkit.entity.Player;
 
 public abstract class PlayerStorageManager {

@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.configuration;
+package io.totominc.extraskills.configuration;
 
 public enum OptionType {
   INT,

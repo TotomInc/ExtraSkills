@@ -1,8 +1,8 @@
-package io.totominc.ExtraSkills.data.storage;
+package io.totominc.extraskills.data.storage;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.data.PlayerData;
-import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.data.PlayerData;
+import io.totominc.extraskills.skills.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

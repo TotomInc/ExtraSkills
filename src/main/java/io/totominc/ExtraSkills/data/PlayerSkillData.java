@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.data;
+package io.totominc.extraskills.data;
 
 public final class PlayerSkillData {
   private double experienceRequired;

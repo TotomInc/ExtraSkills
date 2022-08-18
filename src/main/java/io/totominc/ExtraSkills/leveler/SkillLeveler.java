@@ -1,8 +1,8 @@
-package io.totominc.ExtraSkills.leveler;
+package io.totominc.extraskills.leveler;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.configuration.Option;
-import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.configuration.Option;
+import io.totominc.extraskills.skills.Skill;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;

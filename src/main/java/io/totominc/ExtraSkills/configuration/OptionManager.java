@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.configuration;
+package io.totominc.extraskills.configuration;
 
-import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.extraskills.ExtraSkills;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;

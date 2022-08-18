@@ -1,10 +1,10 @@
-package io.totominc.ExtraSkills.skills.mining;
+package io.totominc.extraskills.skills.mining;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.abilities.Ability;
-import io.totominc.ExtraSkills.abilities.AbilityOption;
-import io.totominc.ExtraSkills.data.PlayerData;
-import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.abilities.Ability;
+import io.totominc.extraskills.abilities.AbilityOption;
+import io.totominc.extraskills.data.PlayerData;
+import io.totominc.extraskills.skills.Skill;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;

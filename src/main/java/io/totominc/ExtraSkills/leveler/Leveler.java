@@ -1,10 +1,10 @@
-package io.totominc.ExtraSkills.leveler;
+package io.totominc.extraskills.leveler;
 
 import com.udojava.evalex.Expression;
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.configuration.Option;
-import io.totominc.ExtraSkills.data.PlayerData;
-import io.totominc.ExtraSkills.skills.Skill;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.configuration.Option;
+import io.totominc.extraskills.data.PlayerData;
+import io.totominc.extraskills.skills.Skill;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;

@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.data;
+package io.totominc.extraskills.data;
 
 import org.jetbrains.annotations.Nullable;
 

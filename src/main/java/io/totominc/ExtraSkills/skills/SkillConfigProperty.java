@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.skills;
+package io.totominc.extraskills.skills;
 
 public enum SkillConfigProperty {
   ENABLED("enabled"),

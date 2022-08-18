@@ -1,9 +1,9 @@
-package io.totominc.ExtraSkills.listeners;
+package io.totominc.extraskills.listeners;
 
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.configuration.Option;
-import io.totominc.ExtraSkills.utils.BlockUtils;
-import io.totominc.ExtraSkills.utils.ChunkUtils;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.configuration.Option;
+import io.totominc.extraskills.utils.BlockUtils;
+import io.totominc.extraskills.utils.ChunkUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

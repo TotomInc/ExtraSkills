@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.skills;
+package io.totominc.extraskills.skills;
 
-import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.extraskills.ExtraSkills;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;

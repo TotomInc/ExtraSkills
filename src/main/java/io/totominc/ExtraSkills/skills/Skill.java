@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.skills;
+package io.totominc.extraskills.skills;
 
-import io.totominc.ExtraSkills.abilities.Ability;
+import io.totominc.extraskills.abilities.Ability;
 
 import java.util.ArrayList;
 import java.util.Collections;

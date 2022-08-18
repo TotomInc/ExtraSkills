@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.commands;
+package io.totominc.extraskills.commands;
 
-import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.extraskills.ExtraSkills;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.Command;

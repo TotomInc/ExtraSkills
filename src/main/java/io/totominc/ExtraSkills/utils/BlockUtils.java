@@ -1,6 +1,6 @@
-package io.totominc.ExtraSkills.utils;
+package io.totominc.extraskills.utils;
 
-import io.totominc.ExtraSkills.ExtraSkills;
+import io.totominc.extraskills.ExtraSkills;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.persistence.PersistentDataType;

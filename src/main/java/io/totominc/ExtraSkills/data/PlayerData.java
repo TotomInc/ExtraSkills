@@ -1,12 +1,12 @@
-package io.totominc.ExtraSkills.data;
+package io.totominc.extraskills.data;
 
 import com.udojava.evalex.Expression;
-import io.totominc.ExtraSkills.ExtraSkills;
-import io.totominc.ExtraSkills.abilities.Ability;
-import io.totominc.ExtraSkills.abilities.AbilityOption;
-import io.totominc.ExtraSkills.configuration.Option;
-import io.totominc.ExtraSkills.skills.Skill;
-import io.totominc.ExtraSkills.utils.TextUtils;
+import io.totominc.extraskills.ExtraSkills;
+import io.totominc.extraskills.abilities.Ability;
+import io.totominc.extraskills.abilities.AbilityOption;
+import io.totominc.extraskills.configuration.Option;
+import io.totominc.extraskills.skills.Skill;
+import io.totominc.extraskills.utils.TextUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.text.StringSubstitutor;

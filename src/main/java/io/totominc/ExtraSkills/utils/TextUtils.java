@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.utils;
+package io.totominc.extraskills.utils;
 
 import org.apache.commons.text.WordUtils;
 

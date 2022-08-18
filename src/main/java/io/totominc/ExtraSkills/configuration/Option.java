@@ -1,4 +1,4 @@
-package io.totominc.ExtraSkills.configuration;
+package io.totominc.extraskills.configuration;
 
 public enum Option {
   ACTION_BAR_ENABLED("action_bar.enabled", OptionType.BOOLEAN),
