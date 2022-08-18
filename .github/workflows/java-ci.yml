@@ -11,10 +11,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: '17'
+          cache: maven
 
       - name: Build package
         run: mvn --batch-mode --update-snapshots package
