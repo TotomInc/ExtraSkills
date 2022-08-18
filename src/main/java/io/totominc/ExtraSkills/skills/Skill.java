@@ -2,14 +2,14 @@ package io.totominc.extraskills.skills;
 
 import io.totominc.extraskills.abilities.Ability;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public enum Skill {
-  COMBAT(new ArrayList<>(Collections.emptyList()), SkillSourceType.ENTITY),
-  ENCHANTER(new ArrayList<>(), SkillSourceType.ITEM),
-  MINING(new ArrayList<>(Collections.singleton(Ability.LUCKY_MINER)), SkillSourceType.BLOCK);
+  COMBAT(List.of(), SkillSourceType.ENTITY),
+  ENCHANTER(List.of(), SkillSourceType.ITEM),
+  MINING(Arrays.asList(Ability.LUCKY_MINER, Ability.HASTER), SkillSourceType.BLOCK);
 
   private final List<Ability> abilities;
   private final SkillSourceType sourceType;

@@ -3,7 +3,8 @@ package io.totominc.extraskills.abilities;
 import io.totominc.extraskills.skills.Skill;
 
 public enum Ability {
-  LUCKY_MINER(Skill.MINING, true, false);
+  LUCKY_MINER(Skill.MINING, true, false),
+  HASTER(Skill.MINING, true, false);
 
   private final Skill associatedSkill;
   private final boolean hasBlockConfig;

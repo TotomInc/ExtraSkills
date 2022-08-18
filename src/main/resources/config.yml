@@ -74,6 +74,17 @@ sound:
   # Volume of the sound, should be a decimal value between 0 and 1.
   skill_level_up_volume: 1
 
+# Additional, special properties for abilities.
+abilities:
+  # Customize configuration for the potion effect applied to the player.
+  haster:
+    # 1 second = 20 ticks.
+    duration_in_ticks: 60
+    # Possible values: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/potion/PotionEffectType.html
+    potion_effect: FAST_DIGGING
+    # Potion effect amplifier.
+    amplifier: 2
+
 # List of game-modes where the plugin should not be enabled. Skill and abilities won't work
 # while the player is in one of these game-modes.
 disabled_gamemodes:

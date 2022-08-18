@@ -11,10 +11,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
 public final class MiningLeveler extends SkillLeveler implements Listener {
-  private final MiningAbilities miningAbilities = new MiningAbilities();
+  private final MiningAbilities miningAbilities;
 
   public MiningLeveler(ExtraSkills instance) {
     super(instance);
+
+    this.miningAbilities = new MiningAbilities(instance);
   }
 
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -31,8 +33,9 @@ public final class MiningLeveler extends SkillLeveler implements Listener {
       return;
     }
 
-    // Apply lucky miner from here.
+    // Apply abilities from here.
     this.miningAbilities.luckyMiner(event.getPlayer(), event.getBlock());
+    this.miningAbilities.haster(event.getPlayer(), event.getBlock());
 
     // Add experience to player.
     this.gainExperience(Skill.MINING, event.getPlayer(), event.getBlock());
