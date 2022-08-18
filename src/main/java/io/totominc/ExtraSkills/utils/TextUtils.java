@@ -4,7 +4,7 @@ import org.apache.commons.text.WordUtils;
 
 public final class TextUtils {
   public static String getCapitalizedString(String string) {
-    return WordUtils.capitalize(string);
+    return WordUtils.capitalizeFully(string);
   }
 
   public static String get2DecimalsString(double value) {
