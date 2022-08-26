@@ -108,6 +108,18 @@ skills:
       BAMBOO: 0.1
       KELP: 0.2
       COCOA: 2
+  lumberjack:
+    enabled: true
+    max_level: 100
+    experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
+    sources:
+      OAK_LOG: 1.5
+      SPRUCE_LOG: 1.5
+      BIRCH_LOG: 1.5
+      JUNGLE_LOG: 1.5
+      ACACIA_LOG: 1.5
+      DARK_OAK_LOG: 1.5
+      MANGROVE_LOG: 1.5
   mining:
     enabled: true
     max_level: 100
