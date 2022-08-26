@@ -4,24 +4,12 @@ abilities:
   mining:
     # Lucky Miner is a percentage-based ability that will double the drops from specified blocks.
     lucky_miner:
-      # If true, the ability is enabled.
       enabled: true
-      # The default value of the ability at level 1 (chance to trigger this ability).
-      # It's a percentage value, that should be between 0 and 100.
       base_value: 2.0
-      # Percentage value gained **per ability level**.
-      # It's also a percentage value, between 0 and 100.
-      # This value will be used like this: base_value + (value_gained_per_level * (skill_level / level_up_rate))
       value_gained_per_level: 2.0
-      # Skill level required to unlock this ability at level 1.
       unlock_level: 5
-      # The multiple that the ability levels up at based on the skill level.
-      # Skill level 10 = ability level 2 IF level_up_rate = 5.
       level_up_rate: 5
-      # The maximum level this ability can be at.
-      # This value can be set to 0, but percentage-based value that are superior to 100 are useless.
       max_level: 10
-      # A list of blocks that will trigger this ability.
       blocks:
         - COAL_ORE
         - DEEPSLATE_COAL_ORE
@@ -71,7 +59,7 @@ abilities:
         - NETHER_GOLD_ORE
         - NETHER_QUARTZ_ORE
     # Farseeing is a percentage-based ability that will increase the amount of experience from a mined block.
-    # Multiplier value can be configured inside config.yml.
+    # Experience multiplier value can be configured inside config.yml.
     farseeing:
       enabled: true
       base_value: 4.0
@@ -98,6 +86,15 @@ abilities:
         - DEEPSLATE_DIAMOND_ORE
         - NETHER_GOLD_ORE
         - NETHER_QUARTZ_ORE
+  enchanter:
+    # Soothsayer is a percentage-based ability that will remove the level cost of an enchantment.
+    soothsayer:
+      enabled: true
+      base_value: 1.0
+      value_gained_per_level: 1.0
+      unlock_level: 5
+      level_up_rate: 2
+      max_level: 5
 
 # Please, do not touch. Used for plugin configuration versioning.
 config_version: 1

@@ -5,7 +5,8 @@ import io.totominc.extraskills.skills.Skill;
 public enum Ability {
   LUCKY_MINER(Skill.MINING, true, false),
   HASTER(Skill.MINING, true, false),
-  FARSEEING(Skill.MINING, true, false);
+  FARSEEING(Skill.MINING, true, false),
+  SOOTHSAYER(Skill.ENCHANTER, false, false);
 
   private final Skill associatedSkill;
   private final boolean hasBlockConfig;
