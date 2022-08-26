@@ -85,6 +85,7 @@ public abstract class SkillAbility {
     if (playerData == null) {
       return false;
     }
+
     AbilityOption abilityOption = playerData.getAbilityOption(ability);
 
     if (

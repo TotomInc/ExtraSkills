@@ -9,6 +9,7 @@ import java.util.List;
 public enum Skill {
   COMBAT(List.of(), SkillSourceType.ENTITY),
   ENCHANTER(List.of(Ability.SOOTHSAYER), SkillSourceType.ITEM),
+  HARVESTER(List.of(), SkillSourceType.BLOCK),
   MINING(Arrays.asList(Ability.LUCKY_MINER, Ability.HASTER, Ability.FARSEEING), SkillSourceType.BLOCK);
 
   private final List<Ability> abilities;

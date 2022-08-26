@@ -13,6 +13,7 @@ import io.totominc.extraskills.listeners.PlayerJoinQuitListeners;
 import io.totominc.extraskills.skills.SkillManager;
 import io.totominc.extraskills.skills.combat.CombatLeveler;
 import io.totominc.extraskills.skills.enchanter.EnchanterLeveler;
+import io.totominc.extraskills.skills.harvester.HarvesterLeveler;
 import io.totominc.extraskills.skills.mining.MiningLeveler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
@@ -149,11 +150,14 @@ public class ExtraSkills extends JavaPlugin {
   private void registerEvents() {
     PluginManager pluginManager = getServer().getPluginManager();
 
+    // Global listeners.
     pluginManager.registerEvents(new BlockListeners(this), this);
     pluginManager.registerEvents(new PlayerJoinQuitListeners(), this);
 
+    // Per skill listeners.
     pluginManager.registerEvents(new CombatLeveler(this), this);
     pluginManager.registerEvents(new EnchanterLeveler(this), this);
+    pluginManager.registerEvents(new HarvesterLeveler(this), this);
     pluginManager.registerEvents(new MiningLeveler(this), this);
   }
 

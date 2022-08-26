@@ -89,6 +89,25 @@ skills:
       NETHERITE_LEGGINGS: 16
       NETHERITE_BOOTS: 16
       ELYTRA: 10
+  harvester:
+    enabled: true
+    max_level: 100
+    experience_expression: "IF(level == 1, 100, 100 * level * 1.33)"
+    sources:
+      WHEAT: 1.0
+      CARROT: 1.5
+      POTATO: 1.5
+      BEETROOT: 2
+      GLOW_BERRIES: 3
+      SWEET_BERRY_BUSH: 2
+      NETHER_WART: 3
+      MELON: 2
+      PUMPKIN: 2
+      CACTUS: 2
+      SUGAR_CANE: 1
+      BAMBOO: 0.1
+      KELP: 0.2
+      COCOA: 2
   mining:
     enabled: true
     max_level: 100
