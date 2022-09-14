@@ -21,16 +21,21 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.io.File;
 
 @SuppressWarnings("unused")
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
-  private static BukkitAudiences adventure;
   private static Economy vaultEconomy;
   private static boolean vaultEnabled;
+  private BukkitAudiences adventure;
 
   private OptionManager optionManager;
   private BossBarManager bossBarManager;
@@ -40,12 +45,24 @@ public class ExtraSkills extends JavaPlugin {
   private AbilityManager abilityManager;
   private Leveler leveler;
 
+  public ExtraSkills() {
+    super();
+  }
+
+  // Protected constructor needed for MockBukkit unit-testing.
+  protected ExtraSkills(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+    super(loader, description, dataFolder, file);
+  }
+
   @Override
   public void onEnable() {
     this.saveDefaultConfig();
 
     instance = this;
-    adventure = BukkitAudiences.create(this);
+
+    // Initialize Adventure.
+    // https://docs.adventure.kyori.net/platform/bukkit.html
+    this.adventure = BukkitAudiences.create(this);
 
     vaultEnabled = this.setupEconomy();
 
@@ -70,9 +87,11 @@ public class ExtraSkills extends JavaPlugin {
 
     instance = null;
 
-    if (adventure != null) {
-      adventure.close();
-      adventure = null;
+    System.out.println("on disable");
+
+    if (this.adventure != null) {
+      this.adventure.close();
+      this.adventure = null;
     }
   }
 
@@ -80,12 +99,12 @@ public class ExtraSkills extends JavaPlugin {
     return instance;
   }
 
-  public static BukkitAudiences getAdventure() {
-    if (adventure == null) {
+  public @NonNull BukkitAudiences getAdventure() {
+    if (this.adventure == null) {
       throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
     }
 
-    return adventure;
+    return this.adventure;
   }
 
   public static Economy getVaultEconomy() {
