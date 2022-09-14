@@ -16,7 +16,6 @@ import io.totominc.extraskills.skills.enchanter.EnchanterLeveler;
 import io.totominc.extraskills.skills.harvester.HarvesterLeveler;
 import io.totominc.extraskills.skills.lumberjack.LumberjackLeveler;
 import io.totominc.extraskills.skills.mining.MiningLeveler;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -28,7 +27,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings("unused")
 public class ExtraSkills extends JavaPlugin {
   private static ExtraSkills instance;
-  private static BukkitAudiences adventure;
   private static Economy vaultEconomy;
   private static boolean vaultEnabled;
 
@@ -45,7 +43,6 @@ public class ExtraSkills extends JavaPlugin {
     this.saveDefaultConfig();
 
     instance = this;
-    adventure = BukkitAudiences.create(this);
 
     vaultEnabled = this.setupEconomy();
 
@@ -69,23 +66,10 @@ public class ExtraSkills extends JavaPlugin {
     this.saveOnlinePlayers();
 
     instance = null;
-
-    if (adventure != null) {
-      adventure.close();
-      adventure = null;
-    }
   }
 
   public static ExtraSkills getInstance() {
     return instance;
-  }
-
-  public static BukkitAudiences getAdventure() {
-    if (adventure == null) {
-      throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-    }
-
-    return adventure;
   }
 
   public static Economy getVaultEconomy() {

@@ -14,7 +14,7 @@ public class ReloadCommand implements CommandExecutor {
     Component message = MiniMessage.miniMessage().deserialize("<gold>The plugin configuration has been reloaded.");
 
     ExtraSkills.getInstance().reloadConfig();
-    ExtraSkills.getAdventure().sender(sender).sendMessage(message);
+    sender.sendMessage(message);
 
     return true;
   }

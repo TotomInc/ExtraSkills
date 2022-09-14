@@ -150,16 +150,16 @@ public final class Leveler {
       (float) this.instance.getOptionManager().getDouble(Option.SOUND_SKILL_LEVELUP_PITCH)
     );
 
-    ExtraSkills.getAdventure().player(player).playSound(sound);
+    player.playSound(sound);
   }
 
   private void sendTitles(Skill skill, Player player, PlayerData playerData) {
-    ExtraSkills.getAdventure().player(player).sendTitlePart(
+    player.sendTitlePart(
       TitlePart.TITLE,
       playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_TITLE)
     );
 
-    ExtraSkills.getAdventure().player(player).sendTitlePart(
+    player.sendTitlePart(
       TitlePart.SUBTITLE,
       playerData.getTitleSkillLevelUpMessage(skill, Option.TITLE_SKILL_LEVELUP_DESCRIPTION)
     );
@@ -167,13 +167,13 @@ public final class Leveler {
 
   private void sendActionBar(Skill skill, Player player, PlayerData playerData, double experience, boolean isMaxLevel) {
     if (!isMaxLevel) {
-      ExtraSkills.getAdventure().player(player).sendActionBar(
+      player.sendActionBar(
         playerData.getActionBarSkillExperienceMessage(skill, experience)
       );
     }
 
     if (isMaxLevel && !this.instance.getOptionManager().getBoolean(Option.ACTION_BAR_DISABLE_MAX_LEVEL)) {
-      ExtraSkills.getAdventure().player(player).sendActionBar(
+      player.sendActionBar(
         playerData.getActionBarMaxSkillLevelMessage(skill, experience)
       );
     }

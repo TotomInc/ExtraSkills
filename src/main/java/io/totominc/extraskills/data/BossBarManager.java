@@ -30,7 +30,7 @@ public final class BossBarManager {
     if (activeBossBar == null) {
       this.bossBarMap.put(uuid, bossBar);
     } else {
-      ExtraSkills.getAdventure().player(player).hideBossBar(activeBossBar);
+      player.hideBossBar(activeBossBar);
 
       this.bossBarMap.replace(uuid, bossBar);
     }
@@ -41,7 +41,7 @@ public final class BossBarManager {
       this.actionIndexMap.replace(uuid, actionIndex + 1);
     }
 
-    ExtraSkills.getAdventure().player(player).showBossBar(bossBar);
+    player.showBossBar(bossBar);
 
     this.scheduleHideBossBar(player);
   }
@@ -52,7 +52,7 @@ public final class BossBarManager {
     Integer actionIndex = this.actionIndexMap.get(uuid);
 
     if (bossBar != null) {
-      ExtraSkills.getAdventure().player(player).hideBossBar(bossBar);
+      player.hideBossBar(bossBar);
       this.bossBarMap.remove(uuid);
     }
 
@@ -88,7 +88,7 @@ public final class BossBarManager {
     BossBar bossBar = this.bossBarMap.get(player.getUniqueId());
 
     if (bossBar != null) {
-      ExtraSkills.getAdventure().player(player).hideBossBar(bossBar);
+      player.hideBossBar(bossBar);
     }
   }
 }
